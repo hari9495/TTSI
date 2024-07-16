@@ -1,0 +1,24 @@
+<html>
+	<body>
+		<p>
+			Dear Team,
+			<br><br>
+			Invoice No  @Invoice Processed with below Details
+			<br><br>
+			Process Name: @ProcessName
+			<br>
+			Mill: @MillName
+			<br>
+			Date: @ProcessDate
+			<br>
+			Day: @ProcessDay
+			<br>
+			Time :@ProcessTime			
+			<br>
+			<h5 style="color:red;">Message:@ExceptionMessage
+			</h5>
+			<br><br>
+		</p>
+<p>This is an automated email, please do not reply to this email</p>
+	</body>
+</html>

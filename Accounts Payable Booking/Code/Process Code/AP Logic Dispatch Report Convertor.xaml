@@ -1,0 +1,454 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="AP_Logic_Dispatch_Report_Convertor" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Folder Where Dispatch Reports sent on email are stored" Name="strDispatchReportFolder" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Path to latest GRPO Wizard File" Name="strGRPOWizardFileName" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Directory Containing Individual Invoice Files " Name="strInvoicesToBeProceesedExcelFolder" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Directory To which Newly created Invoice Files are placed" Name="strInvoiceConvertedFolder" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Folder to which dispatch report line items is biforcated basis invoice no" Name="strDraftInvoiceExcelFolder" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Folder To which Processed dispatch Reports are placed" Name="strDispatchReportProcessedFolder" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Excel File containing macro that appends ' to date" Name="strDateConvertor" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Name of Mill of which Invoice is processed" Name="strMillName" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Path to excel file that Converts Dispatch Report Data basis Invoice No to Invoice Data for Invoice Processing" Name="strnvoiceConvertor" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Folder that contains newly placed dispatch reports downloaded from Email" Name="strDispatchReportProcessingFolder" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Folder To which Temporary dispatch Reports are placed" Name="strDispatchReportConvertedFolder" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Path to Excel File that Splits Dispatch report data basis Invoice no into seperate files" Name="strDispatchReportConvertor" Type="InArgument(x:String)" />
+  </x:Members>
+  <this:AP_Logic_Dispatch_Report_Convertor.strDispatchReportFolder>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strDispatchReportFolder>
+  <this:AP_Logic_Dispatch_Report_Convertor.strGRPOWizardFileName>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strGRPOWizardFileName>
+  <this:AP_Logic_Dispatch_Report_Convertor.strInvoicesToBeProceesedExcelFolder>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strInvoicesToBeProceesedExcelFolder>
+  <this:AP_Logic_Dispatch_Report_Convertor.strInvoiceConvertedFolder>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strInvoiceConvertedFolder>
+  <this:AP_Logic_Dispatch_Report_Convertor.strDraftInvoiceExcelFolder>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strDraftInvoiceExcelFolder>
+  <this:AP_Logic_Dispatch_Report_Convertor.strDateConvertor>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strDateConvertor>
+  <this:AP_Logic_Dispatch_Report_Convertor.strMillName>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strMillName>
+  <this:AP_Logic_Dispatch_Report_Convertor.strnvoiceConvertor>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strnvoiceConvertor>
+  <this:AP_Logic_Dispatch_Report_Convertor.strDispatchReportProcessingFolder>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strDispatchReportProcessingFolder>
+  <this:AP_Logic_Dispatch_Report_Convertor.strDispatchReportConvertor>
+    <InArgument x:TypeArguments="x:String" />
+  </this:AP_Logic_Dispatch_Report_Convertor.strDispatchReportConvertor>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>934,6393</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>AP_Logic_Dispatch_Report_Convertor_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="30">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="28">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Xaml extracts the required GRPO /AP fields from  Dispatch report of POSCOM and JSW mills  for Further Processing.&#xA;i.The dispatch report basis month is saved as an excel copy  in common folder and basis coil no is checked against GRPO wizard every execution  to check if particular invoice coils are inwarded&#xA;iiWhen match of  invoice coil nos is found the particular invoice is biforcated and saved  seperately as excel with the file name being the invoice name fo further processing&#xA;&#xA;Macros in Xaml&#xA;&#xA;1.DateConvertor -Appends date column  with ' for correct date extraction.&#xA;2.Convertor:Macro Checks GRPO Wizard against mach of invoice no in dispatch report and creates uniques invoice files with line items pertaining to particular invoice nos&#xA;3.Invoice Convertor :Copies Invoice data into designated invoice fields from dispatch report to invoice processing file.&#xA;" DisplayName="AP logic Disptach Report Convertor" sap:VirtualizedContainerService.HintSize="790,6328" sap2010:WorkflowViewState.IdRef="Sequence_8">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="748,6029" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+      <TryCatch.Try>
+        <Sequence DisplayName="AP_Logic_Dispatch_Report_Convertor" sap:VirtualizedContainerService.HintSize="710,5802" sap2010:WorkflowViewState.IdRef="Sequence_1">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="s:String[]" Name="strArrayDispatchReportFolder" />
+            <Variable x:TypeArguments="sd:DataTable" Name="dtGRPOWiz" />
+            <Variable x:TypeArguments="s:String[]" Name="strArrayExcelInvoice" />
+            <Variable x:TypeArguments="sd:DataTable" Name="dtInvoiceData" />
+            <Variable x:TypeArguments="x:String" Name="strFileName" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Pre Condition" sap:VirtualizedContainerService.HintSize="668,660" sap2010:WorkflowViewState.IdRef="Sequence_7">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Folder Path Validation workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="ProcessLogic\Folder Path Validation.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="strFolderPath">[strDispatchReportFolder]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="StrFolderPurpose" xml:space="preserve">Email Dispatch Reports downloaded Folder </InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Folder Path Validation workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="ProcessLogic\Folder Path Validation.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="strFolderPath">[strDispatchReportProcessingFolder]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="StrFolderPurpose">Folder for placing Processed Dispatch Report convertor</InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke File Path Validation workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="ProcessLogic\File Path Validation.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="strFilePath">[strGRPOWizardFileName]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="StrFilePurpose">GRPO wizard downloaded file</InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke File Path Validation workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="ProcessLogic\File Path Validation.xaml">
+              <ui:InvokeWorkflowFile.Arguments>
+                <InArgument x:TypeArguments="x:String" x:Key="strFilePath">[strDispatchReportConvertor]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="StrFilePurpose">File for converting dispatch report data basis GRPO wizard available entries</InArgument>
+              </ui:InvokeWorkflowFile.Arguments>
+            </ui:InvokeWorkflowFile>
+          </Sequence>
+          <Assign sap:VirtualizedContainerService.HintSize="668,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="s:String[]">[strArrayDispatchReportFolder]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles(strDispatchReportFolder)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:ReadRange AddHeaders="True" DataTable="[dtGRPOWiz]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="668,87" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="[strGRPOWizardFileName]">
+            <ui:ReadRange.Range>
+              <InArgument x:TypeArguments="x:String">
+                <Literal x:TypeArguments="x:String" Value="" />
+              </InArgument>
+            </ui:ReadRange.Range>
+          </ui:ReadRange>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="668,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Reading Each file from &quot; +strDispatchReportFolder]" />
+          <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="668,4652" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[strArrayDispatchReportFolder]">
+            <ui:ForEach.Body>
+              <ActivityAction x:TypeArguments="x:Object">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
+                </ActivityAction.Argument>
+                <Sequence sap:VirtualizedContainerService.HintSize="632,4528" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If Condition="[item.ToString.Contains(&quot;.xls&quot;) And not(item.ToString.Contains(&quot;\~$&quot;))]" sap:VirtualizedContainerService.HintSize="590,4436" sap2010:WorkflowViewState.IdRef="If_1">
+                    <If.Then>
+                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="554,4259" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="sd:DataTable" Name="dtConsolidatedInvoice" />
+                          <Variable x:TypeArguments="x:String" Name="strProcessedDispatchReportConvertor" />
+                          <Variable x:TypeArguments="x:String" Name="strDispatchReportInstanceCopy" />
+                        </Sequence.Variables>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign sap:VirtualizedContainerService.HintSize="512,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[strFileName]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[strDispatchReportProcessingFolder+"Dispatch Report "+DateTime.Now.ToString("dd-MM-yyyy")+".xlsm"]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Copying Dispatch Report Convertor from&quot; + strDispatchReportConvertor &amp; &quot; to &quot; &amp; strFileName]" />
+                        <ui:CopyFile ContinueOnError="{x:Null}" Destination="[strFileName]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="512,157" sap2010:WorkflowViewState.IdRef="CopyFile_2" Overwrite="True" Path="[strDispatchReportConvertor]" />
+                        <If Condition="[strMillName = &quot;JSW&quot;]" sap:VirtualizedContainerService.HintSize="512,51" sap2010:WorkflowViewState.IdRef="If_2">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Then>
+                            <Sequence sap:VirtualizedContainerService.HintSize="376,204" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Macro Retry workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="ProcessLogic\Macro Retry.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <InArgument x:TypeArguments="x:TimeSpan" x:Key="Macro_Timeout">00:03:59</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="File_Name">[strDateConvertor]</InArgument>
+                                  <InArgument x:TypeArguments="x:String" x:Key="Macro_Name">dateset</InArgument>
+                                  <InArgument x:TypeArguments="scg:IEnumerable(x:Object)" x:Key="Macro_Parameters">[{item.ToString}]</InArgument>
+                                  <OutArgument x:TypeArguments="x:String" x:Key="Out_Sheet_Name" />
+                                </ui:InvokeWorkflowFile.Arguments>
+                              </ui:InvokeWorkflowFile>
+                            </Sequence>
+                          </If.Then>
+                          <If.Else>
+                            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_11">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                        <ui:ReadRange AddHeaders="True" DataTable="[dtConsolidatedInvoice]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="512,87" sap2010:WorkflowViewState.IdRef="ReadRange_3" PreserveFormat="True" SheetName="Sheet1" WorkbookPath="[item.ToString]">
+                          <ui:ReadRange.Range>
+                            <InArgument x:TypeArguments="x:String">
+                              <Literal x:TypeArguments="x:String" Value="" />
+                            </InArgument>
+                          </ui:ReadRange.Range>
+                        </ui:ReadRange>
+                        <ui:WriteRange AddHeaders="True" DataTable="[dtConsolidatedInvoice]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="512,115" sap2010:WorkflowViewState.IdRef="WriteRange_3" SheetName="Sheet1" StartingCell="A1" WorkbookPath="[strFileName]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Read Range from &quot;&amp; ITEM.ToString &amp;&quot; writing to &quot;&amp; strFileName]" />
+                        <ui:WriteRange AddHeaders="True" DataTable="[dtGRPOWiz]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="512,115" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="GRPO Wiz" StartingCell="A1" WorkbookPath="[strFileName]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Creating Draft Invoice from GRPO wiz available data into &quot;+strDraftInvoiceExcelFolder]" />
+                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Macro To seperate dispatch report data basis invoice no" DisplayName="Invoke Macro Retry workflow" sap:VirtualizedContainerService.HintSize="512,143" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="ProcessLogic\Macro Retry.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:TimeSpan" x:Key="Macro_Timeout">00:10:00</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="File_Name">[strFileName]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="Macro_Name">Convertor</InArgument>
+                            <InArgument x:TypeArguments="scg:IEnumerable(x:Object)" x:Key="Macro_Parameters">[{strDraftInvoiceExcelFolder}]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="Out_Sheet_Name" />
+                          </ui:InvokeWorkflowFile.Arguments>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:InvokeWorkflowFile>
+                        <Assign sap:VirtualizedContainerService.HintSize="512,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[strProcessedDispatchReportConvertor]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[strDispatchReportConvertedFolder+"Dispatch Report "+DateTime.Now.ToString("dd-MM-yyyy hh.mm.ss")+".xlsm"]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:MoveFile ContinueOnError="{x:Null}" Destination="[strProcessedDispatchReportConvertor]" DisplayName="Move File" sap:VirtualizedContainerService.HintSize="512,157" sap2010:WorkflowViewState.IdRef="MoveFile_2" Overwrite="True" Path="[strFileName]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Moving Processed Dispatch report from &quot;&amp;strFileName &amp;&quot; to &quot;&amp; strProcessedDispatchReportConvertor]" />
+                        <Assign sap:VirtualizedContainerService.HintSize="512,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[strDispatchReportInstanceCopy]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[strDispatchReportProcessedFolder+"Dispatch Report "+DateTime.Now.ToString("dd-MM-yyyy hh.mm.ss tt")+".xlsx"]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:CopyFile ContinueOnError="{x:Null}" Destination="[strDispatchReportInstanceCopy]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="512,157" sap2010:WorkflowViewState.IdRef="CopyFile_3" Overwrite="True" Path="[item.ToString]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Creating a copy of lastest Dispatch Report at &quot; &amp; strDispatchReportInstanceCopy]" />
+                        <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="512,51" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+                          <ui:CommentOut.Body>
+                            <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="426,249" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:MoveFile ContinueOnError="{x:Null}" Destination="[strDispatchReportProcessedFolder+&quot;Dispatch Report &quot;+DateTime.Now.ToString(&quot;dd-MM-yyyy hh.mm tt&quot;)+&quot;.xlsm&quot;]" DisplayName="Move File" sap:VirtualizedContainerService.HintSize="384,157" sap2010:WorkflowViewState.IdRef="MoveFile_3" Overwrite="True" Path="[item.ToString]" />
+                            </Sequence>
+                          </ui:CommentOut.Body>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:CommentOut>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="512,91" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;Processing Invoices from &quot;&amp; strDraftInvoiceExcelFolder]" />
+                        <Assign sap:VirtualizedContainerService.HintSize="512,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="s:String[]">[strArrayExcelInvoice]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles(strDraftInvoiceExcelFolder)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="512,1588" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[strArrayExcelInvoice]">
+                          <ui:ForEach.Body>
+                            <ActivityAction x:TypeArguments="x:Object">
+                              <ActivityAction.Argument>
+                                <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
+                              </ActivityAction.Argument>
+                              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="476,1464" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:ReadRange AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="434,87" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="Sheet1" WorkbookPath="[item.ToString]">
+                                  <ui:ReadRange.Range>
+                                    <InArgument x:TypeArguments="x:String">
+                                      <Literal x:TypeArguments="x:String" Value="" />
+                                    </InArgument>
+                                  </ui:ReadRange.Range>
+                                </ui:ReadRange>
+                                <Assign sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[strfilename]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[path.GetFileNameWithoutExtension(item.ToString)]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <ui:CopyFile ContinueOnError="{x:Null}" Destination="[strInvoicesToBeProceesedExcelFolder+&quot;\&quot;+strfilename+&quot;.xlsm&quot;]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="434,157" sap2010:WorkflowViewState.IdRef="CopyFile_1" Overwrite="True" Path="[strnvoiceConvertor]" />
+                                <ui:WriteRange AddHeaders="True" DataTable="[dtInvoiceData]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="434,115" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="Data" StartingCell="A1" WorkbookPath="[strInvoicesToBeProceesedExcelFolder+&quot;\&quot;+strfilename+&quot;.xlsm&quot;]" />
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;Copying Invoice data from &quot; &amp; item.ToString &amp; &quot; to &quot;&amp; strInvoicesToBeProceesedExcelFolder+&quot;\&quot;+strfilename+&quot;.xlsm&quot;]" />
+                                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Macro Retry workflow" sap:VirtualizedContainerService.HintSize="434,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="ProcessLogic\Macro Retry.xaml">
+                                  <ui:InvokeWorkflowFile.Arguments>
+                                    <InArgument x:TypeArguments="x:TimeSpan" x:Key="Macro_Timeout">00:00:30</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="File_Name">[strInvoicesToBeProceesedExcelFolder+"\"+strfilename+".xlsm"]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="Macro_Name">Invoice_Convertor</InArgument>
+                                    <InArgument x:TypeArguments="scg:IEnumerable(x:Object)" x:Key="Macro_Parameters" />
+                                    <OutArgument x:TypeArguments="x:String" x:Key="Out_Sheet_Name" />
+                                  </ui:InvokeWorkflowFile.Arguments>
+                                </ui:InvokeWorkflowFile>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Info" Message="[&quot;Executing Macro for Placing invoice field within final validation report for &quot; &amp; strInvoicesToBeProceesedExcelFolder+&quot;\&quot;+strfilename+&quot;.xlsm&quot;]" />
+                                <ui:MoveFile ContinueOnError="{x:Null}" Destination="[strInvoiceConvertedFolder+&quot;\&quot;+strfilename+&quot;.xlsm&quot;]" DisplayName="Move File" sap:VirtualizedContainerService.HintSize="434,157" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="True" Path="[item.ToString]" />
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_12" Level="Info" Message="[&quot;Moving draft Processed dispatch report  from &quot; &amp; item.ToString &amp; &quot; to &quot; &amp; strInvoiceConvertedFolder+&quot;\&quot;+strfilename+&quot;.xlsm&quot;]" />
+                                <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="434,51" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                                  <ui:CommentOut.Body>
+                                    <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="480,143" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <TryCatch.Catches>
+                                          <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <ActivityAction x:TypeArguments="s:Exception">
+                                              <ActivityAction.Argument>
+                                                <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                              </ActivityAction.Argument>
+                                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;File already exists (not overwriting)&quot; + strInvoicesToBeProceesedExcelFolder+&quot;\&quot;+strfilename+&quot;.xlsm&quot;]" />
+                                            </ActivityAction>
+                                          </Catch>
+                                        </TryCatch.Catches>
+                                      </TryCatch>
+                                    </Sequence>
+                                  </ui:CommentOut.Body>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ui:CommentOut>
+                              </Sequence>
+                            </ActivityAction>
+                          </ui:ForEach.Body>
+                        </ui:ForEach>
+                      </Sequence>
+                    </If.Then>
+                  </If>
+                </Sequence>
+              </ActivityAction>
+            </ui:ForEach.Body>
+          </ui:ForEach>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="714,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence sap:VirtualizedContainerService.HintSize="376,245" sap2010:WorkflowViewState.IdRef="Sequence_9">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:String" Default="JSW Dispatc Report Convertor" Name="strComponentName" />
+              </Sequence.Variables>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;JSW Dispatch Report Convertor  Workflow Failed&quot; + exception.Message]" />
+              <Throw Exception="[New Exception(strComponentName+&quot; Failed, Exception Details : &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>
