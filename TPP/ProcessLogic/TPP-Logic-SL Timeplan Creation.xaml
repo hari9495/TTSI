@@ -1,0 +1,1342 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="TPP_Logic_SL_Timeplan_Creation" this:TPP_Logic_SL_Timeplan_Creation.StrLineWiseWIPFilePath="C:\Users\issac\Desktop\Time Plan Preperation\Data\Input\SL\SL-Line-WIP-15-July Shift - 1 [03.01  AM] .xlsm" this:TPP_Logic_SL_Timeplan_Creation.StrTimePlanFinalPath="C:\Users\issac\Desktop\Time Plan Preperation\Data\Output\SL\SL-Timeplan-{0}.xlsm" this:TPP_Logic_SL_Timeplan_Creation.StrTimePlanTemplatePath="C:\Users\issac\Desktop\Time Plan Preperation\Data\Template\SL\SL-TimePlanTemplate.xlsm" this:TPP_Logic_SL_Timeplan_Creation.dtSLPendingRecords="[new DataTable]" this:TPP_Logic_SL_Timeplan_Creation.dtPendingPrevShift="[New DataTable]" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="DicConfig" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="StrLineWiseWIPFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="StrTimePlanFinalPath" Type="InArgument(x:String)" />
+    <x:Property Name="StrTimePlanTemplatePath" Type="InArgument(x:String)" />
+    <x:Property Name="StrTPPFinalPath" Type="OutArgument(x:String)" />
+    <x:Property Name="DTPendingDetails" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="StrCurrentShift" Type="InArgument(x:String)" />
+    <x:Property Name="strFinalTPDirectoryPath" Type="OutArgument(x:String)" />
+    <x:Property Name="StrTimePlanDirectoryFolderPath" Type="InArgument(x:String)" />
+    <x:Property Name="intTotalTimeSL" Type="InArgument(x:Double)" />
+    <x:Property Name="strFinalScrapTagDirectoryPath" Type="OutArgument(x:String)" />
+    <x:Property Name="dtSLPendingRecords" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="dtPendingPrevShift" Type="InArgument(sd:DataTable)" />
+  </x:Members>
+  <this:TPP_Logic_SL_Timeplan_Creation.StrTimePlanDirectoryFolderPath>
+    <InArgument x:TypeArguments="x:String" />
+  </this:TPP_Logic_SL_Timeplan_Creation.StrTimePlanDirectoryFolderPath>
+  <this:TPP_Logic_SL_Timeplan_Creation.intTotalTimeSL>
+    <InArgument x:TypeArguments="x:Double" />
+  </this:TPP_Logic_SL_Timeplan_Creation.intTotalTimeSL>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1240,14439</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>CloseAllApplications_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="52">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.Text.RegularExpressions</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="50">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence sap2010:Annotation.AnnotationText="Description: Read WIP Report and Update Timeplan Based on Priority (Cutting List).&#xA;&#xA;Pre Condition:  Initialize and Validate the Arguments Passed.&#xA;Post Condtion: Close  Time Plan Workbook Instance" DisplayName="TPP-Logic-SL Timeplan Creation" sap:VirtualizedContainerService.HintSize="1229,14374" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="TPP-Logic-SL Timeplan Creation" Name="strComponentName" />
+      <Variable x:TypeArguments="x:Boolean" Name="bolPathExist" />
+      <Variable x:TypeArguments="sd:DataTable" Default="[New DataTable()]" Name="dtMoveTemp" />
+      <Variable x:TypeArguments="ui:WorkbookApplication" Name="wbTimePlanWorkInstance" />
+      <Variable x:TypeArguments="x:Int32" Default="3" Name="intCount1" />
+      <Variable x:TypeArguments="x:Int32" Default="11" Name="intCount2" />
+      <Variable x:TypeArguments="x:Int32" Default="7" Name="intTimeplanRowCount" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="genTimeLoad" />
+      <Variable x:TypeArguments="sd:DataTable" Default="[New DataTable()]" Name="dtTPRecord" />
+      <Variable x:TypeArguments="ui:WorkbookApplication" Name="wbWIPExcelInstance" />
+      <Variable x:TypeArguments="sd:DataTable" Name="DTStockListMaterial" />
+      <Variable x:TypeArguments="s:DateTime" sap2010:Annotation.AnnotationText="DateTime.Parse(DicConfig(&quot;RunDate&quot;).ToString)" Default="[DateTime.Parse(DicConfig(&quot;RunDate&quot;).ToString)]" Name="RunDate" />
+      <Variable x:TypeArguments="x:String" Default="SL" Name="StrLineName" />
+      <Variable x:TypeArguments="x:String" Default="[DicConfig(&quot;SLScrapTagDirectoryPath&quot;).ToString]" Name="StrScrapTagDirectoryFolderPath" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtCompletedTPData" />
+      <Variable x:TypeArguments="x:Int32" Default="0" Name="intScarpCount" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="1187,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;TPP-Logic-SL Timeplan Creation Started&quot;]" />
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="1187,13948" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <TryCatch.Try>
+        <Sequence DisplayName="Create Time Plan Seq" sap:VirtualizedContainerService.HintSize="1149,13152" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:Boolean" Name="BoolDirectoryExists" />
+            <Variable x:TypeArguments="x:String" Name="String_Format_StrScrapTagDirectoryFolderPath_RunDate_ToString__yyyy___RunDate_ToString__MM_MMMMMM___StrLineName____" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Pre Condition" sap:VirtualizedContainerService.HintSize="1107,1159" sap2010:WorkflowViewState.IdRef="Sequence_8">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[String.IsNullOrEmpty(StrLineWiseWIPFilePath.Trim)]" DisplayName="If StrLineWiseWIPFilePath is Empty?" sap:VirtualizedContainerService.HintSize="771,51" sap2010:WorkflowViewState.IdRef="If_9">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;Line Wise WIP File Path is Empty&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_7" />
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Validate File Path" sap:VirtualizedContainerService.HintSize="526,429" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:PathExists DisplayName="Path Exists" Exists="[bolPathExist]" sap:VirtualizedContainerService.HintSize="484,89" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="[StrLineWiseWIPFilePath]" PathType="File" />
+                  <If Condition="[bolPathExist]" DisplayName="If WIP file Path Exist?" sap:VirtualizedContainerService.HintSize="484,208" sap2010:WorkflowViewState.IdRef="If_10">
+                    <If.Else>
+                      <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;Incorrect WIP File Path - &quot;+StrLineWiseWIPFilePath)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_6" />
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+            <If Condition="[String.IsNullOrEmpty(StrTimePlanTemplatePath.Trim)]" DisplayName="If StrTimePlanTemplatePath is Empty?" sap:VirtualizedContainerService.HintSize="771,597" sap2010:WorkflowViewState.IdRef="If_52">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;Incorrect SL TPP Template File Path - &quot;+StrTimePlanTemplatePath)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_11" />
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Validate File Path" sap:VirtualizedContainerService.HintSize="526,439" sap2010:WorkflowViewState.IdRef="Sequence_299">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:PathExists DisplayName="Path Exists" Exists="[bolPathExist]" sap:VirtualizedContainerService.HintSize="484,89" sap2010:WorkflowViewState.IdRef="PathExists_3" Path="[StrTimePlanTemplatePath]" PathType="File" />
+                  <If Condition="[bolPathExist]" DisplayName="If WIP file Path Exist?" sap:VirtualizedContainerService.HintSize="484,218" sap2010:WorkflowViewState.IdRef="If_51">
+                    <If.Else>
+                      <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;Incorrect SL TPP Template File Path - &quot;+StrTimePlanTemplatePath)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_12" />
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+            <If Condition="[String.IsNullOrEmpty(StrTimePlanFinalPath.Trim)]" DisplayName="If StrTimePlanFinalPath is Empty?" sap:VirtualizedContainerService.HintSize="771,208" sap2010:WorkflowViewState.IdRef="If_13">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;Timeplan File Name is Empty&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_10" />
+              </If.Then>
+            </If>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="771,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Pre Condition Validate Completed&quot;]" />
+          </Sequence>
+          <Sequence DisplayName="Work Seq" sap:VirtualizedContainerService.HintSize="1107,9130" sap2010:WorkflowViewState.IdRef="Sequence_10">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign DisplayName="Assign - StrTimePlanFinalPath" sap:VirtualizedContainerService.HintSize="1065,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[StrTimePlanFinalPath]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[String.Format(StrTimePlanFinalPath,RunDate.ToString("dd-MMMM")&amp;" Shift-"&amp;StrCurrentShift &amp; DateTime.Now.ToString(" [hh.mm tt]"))]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1065,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Timeplan File Path Prepared - &quot;+StrTimePlanFinalPath]" />
+            <ui:CopyFile ContinueOnError="{x:Null}" Destination="[StrTimePlanFinalPath]" DisplayName="Copy File - StrTimePlanTemplatePath to Output Folder" sap:VirtualizedContainerService.HintSize="1065,51" sap2010:WorkflowViewState.IdRef="CopyFile_2" Overwrite="True" Path="[StrTimePlanTemplatePath]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CopyFile>
+            <Assign DisplayName="Assign StrTPPFinalPath" sap:VirtualizedContainerService.HintSize="1065,60" sap2010:WorkflowViewState.IdRef="Assign_83">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[StrTPPFinalPath]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[StrTimePlanFinalPath]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1065,51" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Copy Timeplan Template to Output Folder Completed - &quot;+StrTimePlanFinalPath]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:LogMessage>
+            <Sequence DisplayName="Variable Initialization" sap:VirtualizedContainerService.HintSize="1065,66" sap2010:WorkflowViewState.IdRef="Sequence_199">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign DisplayName="Assign WIPTemp" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_60">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="sd:DataTable">[dtMoveTemp]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="sd:DataTable">[New DataTable()]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Assign intTimeplanRowCount" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_69">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[intTimeplanRowCount]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">7</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Assign intCount1" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_147">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[intCount1]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">3</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Assign intCount2" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_148">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Int32">[intCount2]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Int32">11</InArgument>
+                </Assign.Value>
+              </Assign>
+            </Sequence>
+            <TryCatch DisplayName="Try Catch - Excel Retry" sap:VirtualizedContainerService.HintSize="1065,1976" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <TryCatch.Try>
+                <Sequence sap:VirtualizedContainerService.HintSize="476,615" sap2010:WorkflowViewState.IdRef="Sequence_307">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="434,359" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_13" InstanceCachePeriod="3000" Visible="False" Workbook="[wbWIPExcelInstance]" WorkbookPath="[StrLineWiseWIPFilePath]">
+                    <ui:ExcelApplicationScope.Body>
+                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,250" sap2010:WorkflowViewState.IdRef="Sequence_310">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:ExecuteMacro MacroOutput="{x:Null}" ContinueOnError="True" DisplayName="Execute Macro" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExecuteMacro_3" MacroName="ConvertToNumber" />
+                          <ui:ExcelReadRange AddHeaders="True" DataTable="[dtMoveTemp]" DisplayName="Read Range - Final Report" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_6" SheetName="TPPFinalData">
+                            <ui:ExcelReadRange.Range>
+                              <InArgument x:TypeArguments="x:String">
+                                <Literal x:TypeArguments="x:String" Value="" />
+                              </InArgument>
+                            </ui:ExcelReadRange.Range>
+                          </ui:ExcelReadRange>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ExcelApplicationScope.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ExcelApplicationScope>
+                  <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope - Timeplan Preparation" sap:VirtualizedContainerService.HintSize="434,124" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_14" InstanceCachePeriod="3000" Visible="False" Workbook="[wbTimePlanWorkInstance]" WorkbookPath="[StrTimePlanFinalPath]">
+                    <ui:ExcelApplicationScope.Body>
+                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                        </ActivityAction.Argument>
+                      </ActivityAction>
+                    </ui:ExcelApplicationScope.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ExcelApplicationScope>
+                </Sequence>
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="524,1051" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                    </ActivityAction.Argument>
+                    <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="518,982" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="3">
+                      <ui:RetryScope.ActivityBody>
+                        <ActivityAction>
+                          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="476,808" sap2010:WorkflowViewState.IdRef="Sequence_309">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_131" Level="Info" Message="[&quot;Excel Exception Occured - Retry Excel Scope&quot;]" />
+                            <ui:KillProcess AppliesTo="{x:Null}" ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill Process" sap:VirtualizedContainerService.HintSize="434,22" sap2010:WorkflowViewState.IdRef="KillProcess_2" ProcessName="EXCEL" />
+                            <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="434,359" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_15" InstanceCachePeriod="3000" Visible="False" Workbook="[wbWIPExcelInstance]" WorkbookPath="[StrLineWiseWIPFilePath]">
+                              <ui:ExcelApplicationScope.Body>
+                                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                  <ActivityAction.Argument>
+                                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                  </ActivityAction.Argument>
+                                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,250" sap2010:WorkflowViewState.IdRef="Sequence_311">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:ExecuteMacro MacroOutput="{x:Null}" ContinueOnError="True" DisplayName="Execute Macro" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExecuteMacro_4" MacroName="ConvertToNumber" />
+                                    <ui:ExcelReadRange AddHeaders="True" DataTable="[dtMoveTemp]" DisplayName="Read Range - Final Report" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_7" SheetName="TPPFinalData">
+                                      <ui:ExcelReadRange.Range>
+                                        <InArgument x:TypeArguments="x:String">
+                                          <Literal x:TypeArguments="x:String" Value="" />
+                                        </InArgument>
+                                      </ui:ExcelReadRange.Range>
+                                    </ui:ExcelReadRange>
+                                  </Sequence>
+                                </ActivityAction>
+                              </ui:ExcelApplicationScope.Body>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:ExcelApplicationScope>
+                            <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope - Timeplan Preparation" sap:VirtualizedContainerService.HintSize="434,124" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_16" InstanceCachePeriod="3000" Visible="False" Workbook="[wbTimePlanWorkInstance]" WorkbookPath="[StrTimePlanFinalPath]">
+                              <ui:ExcelApplicationScope.Body>
+                                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                  <ActivityAction.Argument>
+                                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                  </ActivityAction.Argument>
+                                </ActivityAction>
+                              </ui:ExcelApplicationScope.Body>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </ui:ExcelApplicationScope>
+                          </Sequence>
+                        </ActivityAction>
+                      </ui:RetryScope.ActivityBody>
+                      <ui:RetryScope.Condition>
+                        <ActivityFunc x:TypeArguments="x:Boolean" />
+                      </ui:RetryScope.Condition>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:RetryScope>
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+            </TryCatch>
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1065,529" sap2010:WorkflowViewState.IdRef="CommentOut_2">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="476,451" sap2010:WorkflowViewState.IdRef="Sequence_312">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="434,359" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_9" InstanceCachePeriod="3000" Visible="False" Workbook="[wbWIPExcelInstance]" WorkbookPath="[StrLineWiseWIPFilePath]">
+                    <ui:ExcelApplicationScope.Body>
+                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,250" sap2010:WorkflowViewState.IdRef="Sequence_291">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:ExecuteMacro MacroOutput="{x:Null}" ContinueOnError="True" DisplayName="Execute Macro" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExecuteMacro_1" MacroName="ConvertToNumber" />
+                          <ui:ExcelReadRange AddHeaders="True" DataTable="[dtMoveTemp]" DisplayName="Read Range - Final Report" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" SheetName="TPPFinalData">
+                            <ui:ExcelReadRange.Range>
+                              <InArgument x:TypeArguments="x:String">
+                                <Literal x:TypeArguments="x:String" Value="" />
+                              </InArgument>
+                            </ui:ExcelReadRange.Range>
+                          </ui:ExcelReadRange>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ExcelApplicationScope.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ExcelApplicationScope>
+                </Sequence>
+              </ui:CommentOut.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CommentOut>
+            <ui:ExcelApplicationScope Password="{x:Null}" WorkbookPath="{x:Null}" AutoSave="False" CreateNewFile="False" DisplayName="Excel Application Scope - Timeplan Preparation" ExistingWorkbook="[wbTimePlanWorkInstance]" sap:VirtualizedContainerService.HintSize="1065,5703" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_8" InstanceCachePeriod="3000" Visible="False">
+              <ui:ExcelApplicationScope.Body>
+                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="1031,5594" sap2010:WorkflowViewState.IdRef="Sequence_190">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Sequence DisplayName="BL1 Timeplan Preparation" sap:VirtualizedContainerService.HintSize="989,5440" sap2010:WorkflowViewState.IdRef="Sequence_189">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:ExcelWriteCell Cell="I4" DisplayName="Write Cell - Day" sap:VirtualizedContainerService.HintSize="947,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_112" SheetName="Sheet1" Text="[RunDate.ToString(&quot;dd&quot;)]" />
+                      <ui:ExcelWriteCell Cell="J4" DisplayName="Write Cell - Month" sap:VirtualizedContainerService.HintSize="947,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_113" SheetName="Sheet1" Text="[RunDate.ToString(&quot;MM&quot;)]" />
+                      <ui:ExcelWriteCell Cell="K4" DisplayName="Write Cell - Year" sap:VirtualizedContainerService.HintSize="947,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_114" SheetName="Sheet1" Text="[RunDate.ToString(&quot;yyyy&quot;)]" />
+                      <ui:ExcelWriteCell Cell="y4" DisplayName="Write Cell - Shift" sap:VirtualizedContainerService.HintSize="947,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_204" SheetName="Sheet1" Text="[StrCurrentShift]" />
+                      <ui:ExcelWriteCell Cell="q4" DisplayName="Write Cell - Shift" sap:VirtualizedContainerService.HintSize="947,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_210" SheetName="Sheet1" Text="[RunDate.ToString(&quot;dddd&quot;)]" />
+                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="947,91" sap2010:WorkflowViewState.IdRef="LogMessage_130" Level="Info" Message="[&quot;Total Record Available to Process - &quot;+dtMoveTemp.Select(&quot;SCAMNO &lt;&gt;'' And MATERIALUNITNO&lt;&gt;''&quot;).Count.ToString]" />
+                      <ui:FilterDataTable DataTable="[dtMoveTemp]" DisplayName="Filter Data Table" FilterRowsMode="Keep" sap:VirtualizedContainerService.HintSize="947,59" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[dtMoveTemp]" SelectColumnsMode="Keep">
+                        <ui:FilterDataTable.Filters>
+                          <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
+                            <ui:FilterOperationArgument Operand="{x:Null}" BooleanOperator="And" Operator="NOTEMPTY">
+                              <ui:FilterOperationArgument.Column>
+                                <InArgument x:TypeArguments="x:String">["SCAMNO"]</InArgument>
+                              </ui:FilterOperationArgument.Column>
+                            </ui:FilterOperationArgument>
+                          </scg:List>
+                        </ui:FilterDataTable.Filters>
+                        <ui:FilterDataTable.SelectColumns>
+                          <scg:List x:TypeArguments="InArgument" Capacity="4">
+                            <x:Null />
+                          </scg:List>
+                        </ui:FilterDataTable.SelectColumns>
+                      </ui:FilterDataTable>
+                      <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtSLPendingRecords]" DisplayName="Write Previous Shift Partials" sap:VirtualizedContainerService.HintSize="947,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="Sheet1" StartingCell="DV10" />
+                      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="947,229" sap2010:WorkflowViewState.IdRef="CommentOut_5">
+                        <ui:CommentOut.Body>
+                          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,151" sap2010:WorkflowViewState.IdRef="Sequence_332">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[dtMoveTemp.Rows(0)(1).ToString &amp;  dtPendingPrevShift(0)(1).TOSTRING]" />
+                          </Sequence>
+                        </ui:CommentOut.Body>
+                      </ui:CommentOut>
+                      <If Condition="[dtPendingPrevShift.rows.Count=0]" sap:VirtualizedContainerService.HintSize="947,207" sap2010:WorkflowViewState.IdRef="If_64">
+                        <If.Else>
+                          <If Condition="[dtMoveTemp.Rows(0)(1).ToString&lt;&gt; dtPendingPrevShift(0)(1).TOSTRING]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_63">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <If sap2010:Annotation.AnnotationText="and (dtMoveTemp.Rows(0)(1).ToString &lt;&gt; dtPendingPrevShift(0)(1).tostring)" Condition="[dtPendingPrevShift.rows.count=1]" sap:VirtualizedContainerService.HintSize="571,2640" sap2010:WorkflowViewState.IdRef="If_59">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dtPendingPrevShift]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="426,2462" sap2010:WorkflowViewState.IdRef="ForEachRow_8">
+                                    <ui:ForEachRow.Body>
+                                      <ActivityAction x:TypeArguments="sd:DataRow">
+                                        <ActivityAction.Argument>
+                                          <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                                        </ActivityAction.Argument>
+                                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,2315" sap2010:WorkflowViewState.IdRef="Sequence_325">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_141" Level="Info" Message="[&quot;Moving Workorder for scams no&quot;+row(&quot;MATERIALUNITNO&quot;).ToString.Trim.ToUpper+&quot; only seting done&quot;]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;C&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Material Unit Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_211" SheetName="Sheet1" Text="[row(&quot;MATERIALUNITNO&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;D&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - SCAM Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_212" SheetName="Sheet1" Text="[row(&quot;SCAMNO&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;E&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Mill" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_213" SheetName="Sheet1" Text="[row(&quot;MILL&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;F&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - SPEC" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_214" SheetName="Sheet1" Text="[row(&quot;SPEC&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;G&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Thick" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_215" SheetName="Sheet1" Text="[row(&quot;T&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;H&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Width" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_216" SheetName="Sheet1" Text="[row(&quot;W&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;I&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell -Coil" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_217" SheetName="Sheet1" Text="[row(&quot;COIL&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;J&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - MCWEIGTH[KGS] Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_218" SheetName="Sheet1" Text="[row(&quot;MCWEIGHT[KGS]&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;K&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - MCLENGTH[MTRS] Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_219" SheetName="Sheet1" Text="[row(&quot;MCLENGTH[MTRS]&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;L&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - PROCESSINGLENGTH[INMTRS] Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_220" SheetName="Sheet1" Text="[row(&quot;PROCESSINGLENGTH[INMTRS]&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;O&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - REWIND Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_221" SheetName="Sheet1" Text="[row(&quot;REWIND&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;P&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - NOOFBREAKING Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_222" SheetName="Sheet1" Text="[row(&quot;NOOFBREAKING&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;Q&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - SEGMENTCHANGE Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_223" SheetName="Sheet1" Text="[If(row(&quot;SEGMENTCHANGE&quot;).ToString.Trim.ToUpper=&quot;NO&quot;,&quot;&quot;,row(&quot;SEGMENTCHANGE&quot;).ToString.Trim.ToUpper)]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;R&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - NOOFSLITCOILS Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_224" SheetName="Sheet1" Text="[row(&quot;NOOFSLITCOILS&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;S&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - SLITSCRAPEDGE[INMM] Number" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_225" SheetName="Sheet1" Text="[row(&quot;SLITSCRAPEDGE[INMM]&quot;).ToString.Trim.ToUpper]" />
+                                          <ui:ExcelWriteCell Cell="[&quot;N&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Coil Setting" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_226" SheetName="Sheet1" Text="S" />
+                                          <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_152">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Int32">[intTimeplanRowCount]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Int32">8</InArgument>
+                                            </Assign.Value>
+                                          </Assign>
+                                        </Sequence>
+                                      </ActivityAction>
+                                    </ui:ForEachRow.Body>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:ForEachRow>
+                                </If.Then>
+                              </If>
+                            </If.Then>
+                          </If>
+                        </If.Else>
+                      </If>
+                      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="947,51" sap2010:WorkflowViewState.IdRef="CommentOut_4">
+                        <ui:CommentOut.Body>
+                          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="391,158" sap2010:WorkflowViewState.IdRef="Sequence_331">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Sequence DisplayName="Previous Shift Pending" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_326">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dtMoveTemp]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="307,230" sap2010:WorkflowViewState.IdRef="ForEachRow_9">
+                                <ui:ForEachRow.Body>
+                                  <ActivityAction x:TypeArguments="sd:DataRow">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                                    </ActivityAction.Argument>
+                                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="200,83" sap2010:WorkflowViewState.IdRef="Sequence_330">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                    </Sequence>
+                                  </ActivityAction>
+                                </ui:ForEachRow.Body>
+                              </ui:ForEachRow>
+                            </Sequence>
+                          </Sequence>
+                        </ui:CommentOut.Body>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:CommentOut>
+                      <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dtMoveTemp]" DisplayName="For Each Row - Priority Unit NO from Cutting List" sap:VirtualizedContainerService.HintSize="947,3424" sap2010:WorkflowViewState.IdRef="ForEachRow_7">
+                        <ui:ForEachRow.Body>
+                          <ActivityAction x:TypeArguments="sd:DataRow">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                            </ActivityAction.Argument>
+                            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="897,3305" sap2010:WorkflowViewState.IdRef="Sequence_188">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <Sequence DisplayName="Variable Initialization" sap:VirtualizedContainerService.HintSize="855,152" sap2010:WorkflowViewState.IdRef="Sequence_198">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <Assign DisplayName="Assign dtTPRecord" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_84">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="sd:DataTable">[dtTPRecord]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="sd:DataTable">[New DataTable()]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="855,91" sap2010:WorkflowViewState.IdRef="LogMessage_76" Level="Info" Message="[&quot;Placing Unit No : &quot;+row(&quot;MATERIALUNITNO&quot;).ToString+&quot;, SCAMS NO - &quot;+row(&quot;SCAMNO&quot;).ToString]" />
+                              <ui:ExcelWriteCell Cell="[&quot;C&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Material Unit Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_111" SheetName="Sheet1" Text="[row(&quot;MATERIALUNITNO&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;D&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - SCAM Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_193" SheetName="Sheet1" Text="[row(&quot;SCAMNO&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;E&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Mill" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_205" SheetName="Sheet1" Text="[row(&quot;MILL&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;F&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - SPEC" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_206" SheetName="Sheet1" Text="[row(&quot;SPEC&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;G&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Thick" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_207" SheetName="Sheet1" Text="[row(&quot;T&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;H&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - Width" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_208" SheetName="Sheet1" Text="[row(&quot;W&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;I&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell -Coil" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_209" SheetName="Sheet1" Text="[row(&quot;COIL&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;J&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - MCWEIGTH[KGS] Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_194" SheetName="Sheet1" Text="[row(&quot;MCWEIGTH[KGS]&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;K&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - MCLENGTH[MTRS] Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_195" SheetName="Sheet1" Text="[row(&quot;MCLENGTH[MTRS]&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;L&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - PROCESSINGLENGTH[INMTRS] Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_196" SheetName="Sheet1" Text="[row(&quot;PROCESSINGLENGTH[INMTRS]&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;O&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - REWIND Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_197" SheetName="Sheet1" Text="[row(&quot;REWIND&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;P&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - NOOFBREAKING Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_198" SheetName="Sheet1" Text="[row(&quot;NOOFBREAKING&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;Q&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - SEGMENTCHANGE Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_199" SheetName="Sheet1" Text="[If(row(&quot;SEGMENTCHANGE&quot;).ToString.Trim.ToUpper=&quot;NO&quot;,&quot;&quot;,row(&quot;SEGMENTCHANGE&quot;).ToString.Trim.ToUpper)]" />
+                              <ui:ExcelWriteCell Cell="[&quot;R&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - NOOFSLITCOILS Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_200" SheetName="Sheet1" Text="[row(&quot;NOOFSLITCOILS&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelWriteCell Cell="[&quot;S&quot;+intTimeplanRowCount.ToString]" DisplayName="Write Cell - SLITSCRAPEDGE[INMM] Number" sap:VirtualizedContainerService.HintSize="855,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_201" SheetName="Sheet1" Text="[row(&quot;SLITSCRAPEDGE[INMM]&quot;).ToString.Trim.ToUpper]" />
+                              <ui:ExcelReadCell Cell="AF35" DisplayName="Read Cell - Time Load" sap:VirtualizedContainerService.HintSize="855,59" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" SheetName="Sheet1">
+                                <ui:ExcelReadCell.Result>
+                                  <OutArgument x:TypeArguments="ui:GenericValue">[genTimeLoad]</OutArgument>
+                                </ui:ExcelReadCell.Result>
+                              </ui:ExcelReadCell>
+                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="855,91" sap2010:WorkflowViewState.IdRef="LogMessage_81" Level="Info" Message="[&quot;Total Load Time - &quot;+(genTimeLoad).ToString]" />
+                              <If Condition="[CDbl(genTimeLoad.ToString.Trim)&gt;=-0.39 and CDbl(genTimeLoad.ToString.Trim)&lt;=intTotalTimeSL]" DisplayName="If Time Load is Less than Max time Limit?" sap:VirtualizedContainerService.HintSize="855,755" sap2010:WorkflowViewState.IdRef="If_21">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Sequence DisplayName="Create SrapeTag" sap:VirtualizedContainerService.HintSize="526,598" sap2010:WorkflowViewState.IdRef="Sequence_300">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:ExcelReadRange AddHeaders="False" DataTable="[dtTPRecord]" DisplayName="Read Range - Time Plan Record" sap:VirtualizedContainerService.HintSize="484,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_4" Range="[&quot;C&quot;+intTimeplanRowCount.ToString+&quot;:S&quot;+intTimeplanRowCount.ToString]" SheetName="Sheet1" />
+                                    <Assign sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_153">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:Int32">[intScarpCount]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:Int32">0</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                    <If Condition="[CInt(row(&quot;NOOFBREAKING&quot;).ToString.Trim)&gt;0]" DisplayName="If No of Breaking &gt; 0" sap:VirtualizedContainerService.HintSize="484,207" sap2010:WorkflowViewState.IdRef="If_60">
+                                      <If.Then>
+                                        <ui:InterruptibleWhile Condition="[intScarpCount&lt;CInt(row(&quot;NOOFBREAKING&quot;).ToString.Trim)]" DisplayName="While - Scrape Creation Based on No of Breakings" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+                                          <ui:InterruptibleWhile.Body>
+                                            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="304,243" sap2010:WorkflowViewState.IdRef="Sequence_327">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <If Condition="[CDec(row(&quot;SLITSCRAPEDGE[INMM]&quot;).ToString.Trim)&gt;50 And CDec(dtTPRecord(0)(4).ToString.Trim)&gt;0.75]" DisplayName="If Validate Scrape Edge and Thickness" sap:VirtualizedContainerService.HintSize="262,51" sap2010:WorkflowViewState.IdRef="If_53">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                    <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <If.Then>
+                                                  <ui:ExcelApplicationScope Password="{x:Null}" WorkbookPath="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope" ExistingWorkbook="[wbWIPExcelInstance]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_12" InstanceCachePeriod="3000">
+                                                    <ui:ExcelApplicationScope.Body>
+                                                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                                        <ActivityAction.Argument>
+                                                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                                        </ActivityAction.Argument>
+                                                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,568" sap2010:WorkflowViewState.IdRef="Sequence_302">
+                                                          <sap:WorkflowViewStateService.ViewState>
+                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                            </scg:Dictionary>
+                                                          </sap:WorkflowViewStateService.ViewState>
+                                                          <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtTPRecord]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="ScrapTag" StartingCell="[&quot;L&quot;+intCount1.ToString]" />
+                                                          <ui:ExcelWriteCell Cell="[&quot;E&quot;+intCount2.ToString]" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_202" SheetName="ScrapTag" Text="[DateTime.Now.Date.ToShortDateString]" />
+                                                          <ui:ExcelSaveWorkbook DisplayName="Save Workbook" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="ExcelSaveWorkbook_3" />
+                                                          <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_143">
+                                                            <Assign.To>
+                                                              <OutArgument x:TypeArguments="x:Int32">[intCount1]</OutArgument>
+                                                            </Assign.To>
+                                                            <Assign.Value>
+                                                              <InArgument x:TypeArguments="x:Int32">[intCount1+14]</InArgument>
+                                                            </Assign.Value>
+                                                          </Assign>
+                                                          <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_145">
+                                                            <Assign.To>
+                                                              <OutArgument x:TypeArguments="x:Int32">[intCount2]</OutArgument>
+                                                            </Assign.To>
+                                                            <Assign.Value>
+                                                              <InArgument x:TypeArguments="x:Int32">[intCount2+14]</InArgument>
+                                                            </Assign.Value>
+                                                          </Assign>
+                                                        </Sequence>
+                                                      </ActivityAction>
+                                                    </ui:ExcelApplicationScope.Body>
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                        <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                  </ui:ExcelApplicationScope>
+                                                </If.Then>
+                                                <If.Else>
+                                                  <If Condition="[CDec(row(&quot;SLITSCRAPEDGE[INMM]&quot;).ToString.Trim)&gt;55 And CDec(dtTPRecord(0)(4).ToString.Trim)&lt;=0.75]" DisplayName="If Validate Scrape Edge and Thickness" sap:VirtualizedContainerService.HintSize="484,207" sap2010:WorkflowViewState.IdRef="If_54">
+                                                    <If.Then>
+                                                      <ui:ExcelApplicationScope Password="{x:Null}" WorkbookPath="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope" ExistingWorkbook="[wbWIPExcelInstance]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_11" InstanceCachePeriod="3000">
+                                                        <ui:ExcelApplicationScope.Body>
+                                                          <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                                            <ActivityAction.Argument>
+                                                              <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                                            </ActivityAction.Argument>
+                                                            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,506" sap2010:WorkflowViewState.IdRef="Sequence_301">
+                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                </scg:Dictionary>
+                                                              </sap:WorkflowViewStateService.ViewState>
+                                                              <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtTPRecord]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_1" SheetName="ScrapTag" StartingCell="[&quot;L&quot;+intCount1.ToString]" />
+                                                              <ui:ExcelWriteCell Cell="[&quot;E&quot;+intCount2.ToString]" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_203" SheetName="ScrapTag" Text="[DateTime.Now.Date.ToShortDateString]" />
+                                                              <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_144">
+                                                                <Assign.To>
+                                                                  <OutArgument x:TypeArguments="x:Int32">[intCount1]</OutArgument>
+                                                                </Assign.To>
+                                                                <Assign.Value>
+                                                                  <InArgument x:TypeArguments="x:Int32">[intCount1+14]</InArgument>
+                                                                </Assign.Value>
+                                                              </Assign>
+                                                              <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_146">
+                                                                <Assign.To>
+                                                                  <OutArgument x:TypeArguments="x:Int32">[intCount2]</OutArgument>
+                                                                </Assign.To>
+                                                                <Assign.Value>
+                                                                  <InArgument x:TypeArguments="x:Int32">[intCount2+14]</InArgument>
+                                                                </Assign.Value>
+                                                              </Assign>
+                                                            </Sequence>
+                                                          </ActivityAction>
+                                                        </ui:ExcelApplicationScope.Body>
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                      </ui:ExcelApplicationScope>
+                                                    </If.Then>
+                                                  </If>
+                                                </If.Else>
+                                              </If>
+                                              <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_154">
+                                                <Assign.To>
+                                                  <OutArgument x:TypeArguments="x:Int32">[intScarpCount]</OutArgument>
+                                                </Assign.To>
+                                                <Assign.Value>
+                                                  <InArgument x:TypeArguments="x:Int32">[intScarpCount+1]</InArgument>
+                                                </Assign.Value>
+                                              </Assign>
+                                            </Sequence>
+                                          </ui:InterruptibleWhile.Body>
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </ui:InterruptibleWhile>
+                                      </If.Then>
+                                      <If.Else>
+                                        <If Condition="[CDec(row(&quot;SLITSCRAPEDGE[INMM]&quot;).ToString.Trim)&gt;50 And CDec(dtTPRecord(0)(4).ToString.Trim)&gt;0.75]" DisplayName="If Validate Scrape Edge and Thickness" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_62">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <If.Then>
+                                            <ui:ExcelApplicationScope Password="{x:Null}" WorkbookPath="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope" ExistingWorkbook="[wbWIPExcelInstance]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_17" InstanceCachePeriod="3000">
+                                              <ui:ExcelApplicationScope.Body>
+                                                <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                                  <ActivityAction.Argument>
+                                                    <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                                  </ActivityAction.Argument>
+                                                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,568" sap2010:WorkflowViewState.IdRef="Sequence_328">
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                    <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtTPRecord]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_5" SheetName="ScrapTag" StartingCell="[&quot;L&quot;+intCount1.ToString]" />
+                                                    <ui:ExcelWriteCell Cell="[&quot;E&quot;+intCount2.ToString]" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_227" SheetName="ScrapTag" Text="[DateTime.Now.Date.ToShortDateString]" />
+                                                    <ui:ExcelSaveWorkbook DisplayName="Save Workbook" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="ExcelSaveWorkbook_4" />
+                                                    <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_155">
+                                                      <Assign.To>
+                                                        <OutArgument x:TypeArguments="x:Int32">[intCount1]</OutArgument>
+                                                      </Assign.To>
+                                                      <Assign.Value>
+                                                        <InArgument x:TypeArguments="x:Int32">[intCount1+14]</InArgument>
+                                                      </Assign.Value>
+                                                    </Assign>
+                                                    <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_156">
+                                                      <Assign.To>
+                                                        <OutArgument x:TypeArguments="x:Int32">[intCount2]</OutArgument>
+                                                      </Assign.To>
+                                                      <Assign.Value>
+                                                        <InArgument x:TypeArguments="x:Int32">[intCount2+14]</InArgument>
+                                                      </Assign.Value>
+                                                    </Assign>
+                                                  </Sequence>
+                                                </ActivityAction>
+                                              </ui:ExcelApplicationScope.Body>
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                            </ui:ExcelApplicationScope>
+                                          </If.Then>
+                                          <If.Else>
+                                            <If Condition="[CDec(row(&quot;SLITSCRAPEDGE[INMM]&quot;).ToString.Trim)&gt;55 And CDec(dtTPRecord(0)(4).ToString.Trim)&lt;=0.75]" DisplayName="If Validate Scrape Edge and Thickness" sap:VirtualizedContainerService.HintSize="484,207" sap2010:WorkflowViewState.IdRef="If_61">
+                                              <If.Then>
+                                                <ui:ExcelApplicationScope Password="{x:Null}" WorkbookPath="{x:Null}" CreateNewFile="False" DisplayName="Excel Application Scope" ExistingWorkbook="[wbWIPExcelInstance]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_18" InstanceCachePeriod="3000">
+                                                  <ui:ExcelApplicationScope.Body>
+                                                    <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                                                      <ActivityAction.Argument>
+                                                        <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                                                      </ActivityAction.Argument>
+                                                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,506" sap2010:WorkflowViewState.IdRef="Sequence_329">
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                        <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtTPRecord]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_6" SheetName="ScrapTag" StartingCell="[&quot;L&quot;+intCount1.ToString]" />
+                                                        <ui:ExcelWriteCell Cell="[&quot;E&quot;+intCount2.ToString]" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_228" SheetName="ScrapTag" Text="[DateTime.Now.Date.ToShortDateString]" />
+                                                        <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_157">
+                                                          <Assign.To>
+                                                            <OutArgument x:TypeArguments="x:Int32">[intCount1]</OutArgument>
+                                                          </Assign.To>
+                                                          <Assign.Value>
+                                                            <InArgument x:TypeArguments="x:Int32">[intCount1+14]</InArgument>
+                                                          </Assign.Value>
+                                                        </Assign>
+                                                        <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_158">
+                                                          <Assign.To>
+                                                            <OutArgument x:TypeArguments="x:Int32">[intCount2]</OutArgument>
+                                                          </Assign.To>
+                                                          <Assign.Value>
+                                                            <InArgument x:TypeArguments="x:Int32">[intCount2+14]</InArgument>
+                                                          </Assign.Value>
+                                                        </Assign>
+                                                      </Sequence>
+                                                    </ActivityAction>
+                                                  </ui:ExcelApplicationScope.Body>
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                </ui:ExcelApplicationScope>
+                                              </If.Then>
+                                            </If>
+                                          </If.Else>
+                                        </If>
+                                      </If.Else>
+                                    </If>
+                                    <Assign DisplayName="Assign intTimeplanRowCount" sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_59">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:Int32">[intTimeplanRowCount]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:Int32">[intTimeplanRowCount+1]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                  </Sequence>
+                                </If.Then>
+                                <If.Else>
+                                  <Sequence DisplayName="Delete updated Row" sap:VirtualizedContainerService.HintSize="284,359" sap2010:WorkflowViewState.IdRef="Sequence_202">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <Sequence DisplayName="Delete Updated Fields" sap:VirtualizedContainerService.HintSize="242,267" sap2010:WorkflowViewState.IdRef="Sequence_203">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:ExcelDeleteRange DisplayName="Delete Range - Unit No" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="ExcelDeleteRange_5" Range="[&quot;C&quot;+intTimeplanRowCount.ToString+&quot;:M&quot;+intTimeplanRowCount.ToString]" SheetName="Sheet1" ShiftCells="False" ShiftOption="ShiftUp" />
+                                      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                                        <ui:CommentOut.Body>
+                                          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="242,114" sap2010:WorkflowViewState.IdRef="Sequence_303">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <ui:ExcelDeleteRange DisplayName="Delete Range - MC Weight &amp; Length" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="ExcelDeleteRange_7" Range="[&quot;J&quot;+intTimeplanRowCount.ToString+&quot;:L&quot;+intTimeplanRowCount.ToString]" SheetName="Sheet1" ShiftCells="False" ShiftOption="ShiftUp" />
+                                          </Sequence>
+                                        </ui:CommentOut.Body>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </ui:CommentOut>
+                                      <ui:ExcelDeleteRange DisplayName="Delete Range - No of Coil Details" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="ExcelDeleteRange_6" Range="[&quot;O&quot;+intTimeplanRowCount.ToString+&quot;:T&quot;+intTimeplanRowCount.ToString]" SheetName="Sheet1" ShiftCells="False" ShiftOption="ShiftUp" />
+                                    </Sequence>
+                                  </Sequence>
+                                </If.Else>
+                              </If>
+                            </Sequence>
+                          </ActivityAction>
+                        </ui:ForEachRow.Body>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:ForEachRow>
+                      <ui:ExcelReadRange AddHeaders="False" DataTable="[dtCompletedTPData]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="947,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_8" Range="B6:AH34" SheetName="Sheet1" />
+                      <ui:ExcelWriteRange AddHeaders="False" DataTable="[dtCompletedTPData]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="947,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_4" SheetName="Sheet1" StartingCell="OE6" />
+                      <ui:ExcelReadCell Cell="AF35" DisplayName="Read Cell - Time Load" sap:VirtualizedContainerService.HintSize="947,59" sap2010:WorkflowViewState.IdRef="ExcelReadCell_2" SheetName="Sheet1">
+                        <ui:ExcelReadCell.Result>
+                          <OutArgument x:TypeArguments="ui:GenericValue">[genTimeLoad]</OutArgument>
+                        </ui:ExcelReadCell.Result>
+                      </ui:ExcelReadCell>
+                    </Sequence>
+                    <ui:ExcelSaveWorkbook DisplayName="Save Workbook" sap:VirtualizedContainerService.HintSize="989,22" sap2010:WorkflowViewState.IdRef="ExcelSaveWorkbook_1" />
+                  </Sequence>
+                </ActivityAction>
+              </ui:ExcelApplicationScope.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ExcelApplicationScope>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1065,91" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;SL Final Time Load- &quot;+genTimeLoad.ToString]" />
+          </Sequence>
+          <Sequence DisplayName="Post Condition" sap:VirtualizedContainerService.HintSize="1107,341" sap2010:WorkflowViewState.IdRef="Sequence_110">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ExcelCloseWorkbook DisplayName="Close Workbook" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_1" Workbook="[wbTimePlanWorkInstance]" />
+            <ui:ExcelCloseWorkbook DisplayName="Close Workbook" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelCloseWorkbook_2" Workbook="[wbWIPExcelInstance]" />
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="334,51" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,179" sap2010:WorkflowViewState.IdRef="Sequence_316">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Macro Retry workflow" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="ProcessLogic\Macro Retry.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:TimeSpan" x:Key="Macro_Timeout">00:00:30</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="File_Name">[StrTimePlanFinalPath]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="Macro_Name">SCRAPTAG</InArgument>
+                      <InArgument x:TypeArguments="scg:IEnumerable(x:Object)" x:Key="Macro_Parameters">[{StrLineWiseWIPFilePath}]</InArgument>
+                      <OutArgument x:TypeArguments="x:String" x:Key="Out_Sheet_Name" />
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                </Sequence>
+              </ui:CommentOut.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CommentOut>
+          </Sequence>
+          <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="1107,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;TPP-Logic-SE Timeplan Creation Success&quot;]" />
+          <ui:PathExists DisplayName="Timeplan file directory Path Exists" Exists="[BoolDirectoryExists]" sap:VirtualizedContainerService.HintSize="1107,89" sap2010:WorkflowViewState.IdRef="PathExists_4" Path="[String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName,&quot;&quot;)]" PathType="Folder" />
+          <If Condition="[BoolDirectoryExists]" DisplayName="Error Handlling if file path doesnt exist" sap:VirtualizedContainerService.HintSize="1107,669" sap2010:WorkflowViewState.IdRef="If_55">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="476,511" sap2010:WorkflowViewState.IdRef="Sequence_313">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_132" Level="Info" Message="[&quot;File Directory Exists at &quot; +String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName,&quot;&quot;).ToString]" />
+                <ui:CopyFile ContinueOnError="{x:Null}" Destination="[String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName,StrLineName+&quot; Time Plan &quot;+ RunDate.ToString(&quot;dd-MMMMM&quot;)+&quot; Shift-&quot;+StrCurrentShift.ToString+&quot;.xlsm&quot;)]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="434,157" sap2010:WorkflowViewState.IdRef="CopyFile_3" Overwrite="True" Path="[StrTPPFinalPath]" />
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_133" Level="Trace" Message="[&quot;Timeplan for &quot;+StrLineName+&quot; on &quot;+RunDate.ToString(&quot;dd-MM-yyyy&quot;)+&quot; copied to &quot; +String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName,StrLineName+&quot; Time Plan &quot;+ RunDate.ToString(&quot;dd-MMMMM&quot;)+&quot; Shift-&quot;+StrCurrentShift.ToString+&quot;.xlsm&quot;)]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="If directory Does Not exist" sap:VirtualizedContainerService.HintSize="418,337" sap2010:WorkflowViewState.IdRef="Sequence_315">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Sequence DisplayName="Error Handling" sap:VirtualizedContainerService.HintSize="376,245" sap2010:WorkflowViewState.IdRef="Sequence_314">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_134" Level="Fatal" Message="[&quot;Incorrect File Directory Path &quot;+String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName).ToString]" />
+                  <Throw Exception="[New SystemException(&quot;Incorrect File Directory Path &quot;+ StrTimePlanDirectoryFolderPath)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_13" />
+                </Sequence>
+              </Sequence>
+            </If.Else>
+          </If>
+          <ui:PathExists DisplayName="Timeplan file directory Path Exists" Exists="[BoolDirectoryExists]" sap:VirtualizedContainerService.HintSize="1107,89" sap2010:WorkflowViewState.IdRef="PathExists_5" Path="[String.Format(StrScrapTagDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),&quot;&quot;)]" PathType="Folder" />
+          <If Condition="[BoolDirectoryExists]" DisplayName="Error Handlling if file path doesnt exist" sap:VirtualizedContainerService.HintSize="1107,669" sap2010:WorkflowViewState.IdRef="If_56">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="476,511" sap2010:WorkflowViewState.IdRef="Sequence_317">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_135" Level="Info" Message="[&quot;File Directory Exists at &quot; +String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName,&quot;&quot;).ToString]" />
+                <ui:CopyFile ContinueOnError="{x:Null}" Destination="[String.Format(StrScrapTagDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName+&quot; Scrap Tag &quot;+ RunDate.ToString(&quot;dd-MMMMM&quot;)+&quot; Shift-&quot;+StrCurrentShift.ToString+&quot;.xlsm&quot;)]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="434,157" sap2010:WorkflowViewState.IdRef="CopyFile_4" Overwrite="True" Path="[StrLineWiseWIPFilePath]" />
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_136" Level="Trace" Message="[&quot;Timeplan for &quot;+StrLineName+&quot; on &quot;+RunDate.ToString(&quot;dd-MM-yyyy&quot;)+&quot; copied to &quot; +String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName,StrLineName+&quot; Time Plan &quot;+ RunDate.ToString(&quot;dd-MMMMM&quot;)+&quot; Shift-&quot;+StrCurrentShift.ToString+&quot;.xlsm&quot;)]" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="If directory Does Not exist" sap:VirtualizedContainerService.HintSize="418,337" sap2010:WorkflowViewState.IdRef="Sequence_319">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Sequence DisplayName="Error Handling" sap:VirtualizedContainerService.HintSize="376,245" sap2010:WorkflowViewState.IdRef="Sequence_318">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_137" Level="Fatal" Message="[&quot;Incorrect File Directory Path &quot;+String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString(&quot;yyyy&quot;),RunDate.ToString(&quot;MM MMMMMM&quot;),StrLineName).ToString]" />
+                  <Throw Exception="[New SystemException(&quot;Incorrect File Directory Path &quot;+ StrTimePlanDirectoryFolderPath)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_14" />
+                </Sequence>
+              </Sequence>
+            </If.Else>
+          </If>
+          <Assign sap:VirtualizedContainerService.HintSize="1107,60" sap2010:WorkflowViewState.IdRef="Assign_151">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[strFinalTPDirectoryPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString("yyyy"),RunDate.ToString("MM MMMMMM"),StrLineName,StrLineName+" Time Plan "+ RunDate.ToString("dd-MMMMM")+" Shift-"+StrCurrentShift.ToString+".xlsm")]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="1107,51" sap2010:WorkflowViewState.IdRef="CommentOut_8">
+            <ui:CommentOut.Body>
+              <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="923,158" sap2010:WorkflowViewState.IdRef="Sequence_335">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Sequence DisplayName="Previous Shift File Name Handling" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_324">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Default="[dicConfig(&quot;PrevShiftFileNamesLogPath&quot;).ToString]" Name="StrPrevShiftFileNamesLogPath" />
+                    <Variable x:TypeArguments="x:String" Name="strCurrentRunDetails" />
+                    <Variable x:TypeArguments="x:String" Name="strPreviousRunDetails" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:PathExists DisplayName="Timeplan file directory Path Exists" Exists="[BoolDirectoryExists]" sap:VirtualizedContainerService.HintSize="839,89" sap2010:WorkflowViewState.IdRef="PathExists_6" Path="[StrPrevShiftFileNamesLogPath]" PathType="File" />
+                  <If Condition="[BoolDirectoryExists]" DisplayName="Error Handlling if file path doesnt exist" sap:VirtualizedContainerService.HintSize="839,495" sap2010:WorkflowViewState.IdRef="If_57">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence sap:VirtualizedContainerService.HintSize="376,183" sap2010:WorkflowViewState.IdRef="Sequence_320">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_138" Level="Info" Message="[&quot;Previous Shift File Names Exists at &quot; +StrPrevShiftFileNamesLogPath]" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="If directory Does Not exist" sap:VirtualizedContainerService.HintSize="418,337" sap2010:WorkflowViewState.IdRef="Sequence_322">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Sequence DisplayName="Error Handling" sap:VirtualizedContainerService.HintSize="376,245" sap2010:WorkflowViewState.IdRef="Sequence_321">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_139" Level="Fatal" Message="[&quot;Incorrect PreviousShift File Name Path &quot;+StrPrevShiftFileNamesLogPath]" />
+                          <Throw Exception="[New SystemException(&quot;Incorrect PreviousShift File Name Path &quot;+StrPrevShiftFileNamesLogPath)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_15" />
+                        </Sequence>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                  <ui:ReadCell Cell="B4" DisplayName="Read Cell Current Shift Details" sap:VirtualizedContainerService.HintSize="839,87" sap2010:WorkflowViewState.IdRef="ReadCell_1" SheetName="[StrLineName]" WorkbookPath="[StrPrevShiftFileNamesLogPath]">
+                    <ui:ReadCell.Result>
+                      <OutArgument x:TypeArguments="x:String">[strCurrentRunDetails]</OutArgument>
+                    </ui:ReadCell.Result>
+                  </ui:ReadCell>
+                  <ui:ReadCell Cell="B5" DisplayName="Read Cell Previus Shift Details" sap:VirtualizedContainerService.HintSize="839,87" sap2010:WorkflowViewState.IdRef="ReadCell_2" SheetName="[StrLineName]" WorkbookPath="[StrPrevShiftFileNamesLogPath]">
+                    <ui:ReadCell.Result>
+                      <OutArgument x:TypeArguments="x:String">[strPreviousRunDetails]</OutArgument>
+                    </ui:ReadCell.Result>
+                  </ui:ReadCell>
+                  <If Condition="[strCurrentRunDetails=strPreviousRunDetails]" sap:VirtualizedContainerService.HintSize="839,647" sap2010:WorkflowViewState.IdRef="If_58">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_140" Level="Warn" Message="[&quot;Same file run again not overwriting&quot;]" />
+                    </If.Then>
+                    <If.Else>
+                      <Sequence sap:VirtualizedContainerService.HintSize="376,489" sap2010:WorkflowViewState.IdRef="Sequence_323">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="x:String" Name="strPrevRunFileDetails" />
+                        </Sequence.Variables>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:ReadCell Cell="B2" DisplayName="Read Exising Current Run Details" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ReadCell_3" SheetName="[StrLineName]" WorkbookPath="[strPrevShiftFileNamesLogPath]">
+                          <ui:ReadCell.Result>
+                            <OutArgument x:TypeArguments="x:String">[strPrevRunFileDetails]</OutArgument>
+                          </ui:ReadCell.Result>
+                        </ui:ReadCell>
+                        <ui:WriteCell Cell="B3" DisplayName="Move to Previous Shift Details" sap:VirtualizedContainerService.HintSize="334,115" sap2010:WorkflowViewState.IdRef="WriteCell_1" SheetName="[StrLineName]" Text="[strPrevRunFileDetails]" WorkbookPath="[strPrevShiftFileNamesLogPath]" />
+                        <ui:WriteCell Cell="B2" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="334,115" sap2010:WorkflowViewState.IdRef="WriteCell_2" SheetName="[StrLineName]" Text="[StrFinalTPDirectoryPath]" WorkbookPath="[StrPrevShiftFileNamesLogPath]" />
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </Sequence>
+            </ui:CommentOut.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:CommentOut>
+          <Assign sap:VirtualizedContainerService.HintSize="1107,60" sap2010:WorkflowViewState.IdRef="Assign_149">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[strFinalTPDirectoryPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[String.Format(StrTimePlanDirectoryFolderPath,RunDate.ToString("yyyy"),RunDate.ToString("MM MMMMMM"),StrLineName,StrLineName+" Time Plan "+ RunDate.ToString("dd-MMMMM")+" Shift-"+StrCurrentShift.ToString+".xlsm")]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap:VirtualizedContainerService.HintSize="1107,60" sap2010:WorkflowViewState.IdRef="Assign_150">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[strFinalScrapTagDirectoryPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[String.Format(StrScrapTagDirectoryFolderPath,RunDate.ToString("yyyy"),RunDate.ToString("MM MMMMMM"),StrLineName+" Scrap Tag "+ RunDate.ToString("dd-MMMMM")+" Shift-"+StrCurrentShift.ToString+".xlsm")]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke Macro Retry workflow" sap:VirtualizedContainerService.HintSize="1107,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="ProcessLogic\Macro Retry.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:TimeSpan" x:Key="Macro_Timeout">00:00:30</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="File_Name">[strFinalScrapTagDirectoryPath]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="Macro_Name">PWD</InArgument>
+              <InArgument x:TypeArguments="scg:IEnumerable(x:Object)" x:Key="Macro_Parameters" />
+              <OutArgument x:TypeArguments="x:String" x:Key="Out_Sheet_Name" />
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="1153,486" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="System Exception" sap:VirtualizedContainerService.HintSize="376,417" sap2010:WorkflowViewState.IdRef="Sequence_7">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error" Message="[strComponentName+&quot; Failed, Exception Details : &quot;+exception.Message]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:LogMessage>
+              <ui:KillProcess AppliesTo="{x:Null}" ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill Process" sap:VirtualizedContainerService.HintSize="334,132" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="EXCEL" />
+              <Throw DisplayName="Throw - SysEX" Exception="[New Exception(strComponentName+&quot; Failed, Exception Details : &quot;+exception.Message+&quot;----&quot;+exception.Source)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="1187,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;TPP-Logic-SL Timeplan Creation Completed&quot;]" />
+  </Sequence>
+</Activity>

@@ -1,0 +1,572 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="TPP_TimePlan_Creation" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="SPEC_TWL_DT_CL" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="Lot_Qty_DT_CL" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="Lot_Time_DT_CL" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="SPEC_TWL_DT_PAR" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="Unit_Scams_No_DT_PAR" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="Unit_Scams_No_DT_CL" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="Lot_Qty_DT_PAR" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="SheetName_Line" Type="InArgument(x:String)" />
+    <x:Property Name="TP_MasterCopy_Loc" Type="InArgument(x:String)" />
+    <x:Property Name="TP_TempCopy_Loc" Type="InArgument(x:String)" />
+    <x:Property Name="Line_Name" Type="InArgument(x:String)" />
+    <x:Property Name="Partial_Check" Type="InArgument(x:String)" />
+    <x:Property Name="TP_OutputCopy_Loc" Type="InArgument(x:String)" />
+    <x:Property Name="Shift" Type="InArgument(x:String)" />
+    <x:Property Name="Final_Output_TimePlan_Path" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="dicConfig" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="Total_Time" Type="InArgument(x:Double)" />
+  </x:Members>
+  <this:TPP_TimePlan_Creation.SheetName_Line>
+    <InArgument x:TypeArguments="x:String" />
+  </this:TPP_TimePlan_Creation.SheetName_Line>
+  <this:TPP_TimePlan_Creation.TP_MasterCopy_Loc>
+    <InArgument x:TypeArguments="x:String" />
+  </this:TPP_TimePlan_Creation.TP_MasterCopy_Loc>
+  <this:TPP_TimePlan_Creation.TP_TempCopy_Loc>
+    <InArgument x:TypeArguments="x:String" />
+  </this:TPP_TimePlan_Creation.TP_TempCopy_Loc>
+  <this:TPP_TimePlan_Creation.Partial_Check>
+    <InArgument x:TypeArguments="x:String" />
+  </this:TPP_TimePlan_Creation.Partial_Check>
+  <this:TPP_TimePlan_Creation.TP_OutputCopy_Loc>
+    <InArgument x:TypeArguments="x:String" />
+  </this:TPP_TimePlan_Creation.TP_OutputCopy_Loc>
+  <this:TPP_TimePlan_Creation.Shift>
+    <InArgument x:TypeArguments="x:String" />
+  </this:TPP_TimePlan_Creation.Shift>
+  <this:TPP_TimePlan_Creation.dicConfig>
+    <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" />
+  </this:TPP_TimePlan_Creation.dicConfig>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1380,9306</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>TPP_TimePlan_Creation_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="24">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="48">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="TimePlan Creation" sap:VirtualizedContainerService.HintSize="1390,9141" sap2010:WorkflowViewState.IdRef="Sequence_6">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="s:DateTime" Default="[DateTime.Parse(dicConfig(&quot;RunDate&quot;).ToString)]" Name="Run_Date" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="1348,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Final Data transfer to &quot;+Line_Name+&quot; Timeplan has started.&quot;]" />
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="1348,8787" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Variables>
+        <Variable x:TypeArguments="x:Boolean" Name="Boolean_Path" />
+        <Variable x:TypeArguments="sd:DataTable" Name="Unit_Scams_No_DT" />
+        <Variable x:TypeArguments="sd:DataTable" Name="SPEC_TWL_DT" />
+        <Variable x:TypeArguments="sd:DataTable" Name="Lot_Qty_DT" />
+        <Variable x:TypeArguments="x:Double" Name="Time" />
+        <Variable x:TypeArguments="ui:WorkbookApplication" Name="Output1" />
+      </TryCatch.Variables>
+      <TryCatch.Try>
+        <Sequence sap:VirtualizedContainerService.HintSize="1310,7978" sap2010:WorkflowViewState.IdRef="Sequence_12">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Pre Condition" sap:VirtualizedContainerService.HintSize="1268,3017" sap2010:WorkflowViewState.IdRef="Sequence_11">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign DisplayName="Assign DtCuttingListDetails" sap:VirtualizedContainerService.HintSize="958,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[Unit_Scams_No_DT]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[new DataTable()]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Assign DtCuttingListDetails" sap:VirtualizedContainerService.HintSize="958,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[SPEC_TWL_DT]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[new DataTable()]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="Assign DtCuttingListDetails" sap:VirtualizedContainerService.HintSize="958,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sd:DataTable">[Lot_Qty_DT]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sd:DataTable">[new DataTable()]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If Condition="[TP_MasterCopy_Loc&lt;&gt;String.Empty]" DisplayName="If TP_MasterCopy_Loc is not Empty?" sap:VirtualizedContainerService.HintSize="958,700" sap2010:WorkflowViewState.IdRef="If_4">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="TP_MasterCopy Path Validation" sap:VirtualizedContainerService.HintSize="663,552" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:PathExists DisplayName="Path Exists" Exists="[Boolean_Path]" sap:VirtualizedContainerService.HintSize="621,89" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="[TP_MasterCopy_Loc]" PathType="File">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:PathExists>
+                  <If Condition="[Boolean_Path]" DisplayName="If TP_MasterCopy_Loc Exist?" sap:VirtualizedContainerService.HintSize="621,331" sap2010:WorkflowViewState.IdRef="If_3">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence sap:VirtualizedContainerService.HintSize="376,183" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Timeplan Master Copy path for &quot;+Line_Name+&quot; is validated - &quot;+ TP_MasterCopy_Loc]" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Throw DisplayName="Throw - Ex" Exception="[New Exception(&quot;Incorrect Timeplan Master Copy File Path - &quot;+TP_MasterCopy_Loc)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Throw DisplayName="Throw - Ex" Exception="[New Exception(&quot;Timeplan Master Copy File Path is Empty for &quot;+Line_Name)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
+              </If.Else>
+            </If>
+            <If Condition="[TP_TempCopy_Loc&lt;&gt;String.Empty]" DisplayName="If TP_TempCopy_Loc is not Empty?" sap:VirtualizedContainerService.HintSize="958,897" sap2010:WorkflowViewState.IdRef="If_6">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="TimePlan Temporary Copy Path Validation" sap:VirtualizedContainerService.HintSize="713,749" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:PathExists DisplayName="Path Exists" Exists="[Boolean_Path]" sap:VirtualizedContainerService.HintSize="671,89" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="[TP_TempCopy_Loc]" PathType="File">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:PathExists>
+                  <If Condition="[Boolean_Path]" DisplayName="If Time PlanTemporary Copy Loc Exist" sap:VirtualizedContainerService.HintSize="671,528" sap2010:WorkflowViewState.IdRef="If_5">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence sap:VirtualizedContainerService.HintSize="426,380" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:CopyFile ContinueOnError="{x:Null}" Destination="[TP_TempCopy_Loc]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="384,157" sap2010:WorkflowViewState.IdRef="CopyFile_4" Overwrite="True" Path="[TP_MasterCopy_Loc]" />
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="384,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Timeplan Temporary File Path Validated for &quot;+Line_Name+&quot; and overwrite at temporary location -&quot;+TP_TempCopy_Loc+&quot; is complete&quot;]" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Throw DisplayName="Throw - Ex" Exception="[New Exception(&quot;Incorrect Timeplan Temporary File Path - &quot;+TP_TempCopy_Loc)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_3" />
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Throw DisplayName="Throw - Ex" Exception="[New Exception(&quot;Timeplan Temporary Folder Path is Empty for &quot;+Line_Name)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_4" />
+              </If.Else>
+            </If>
+            <If Condition="[TP_TempCopy_Loc&lt;&gt;String.Empty]" DisplayName="If TP_OutputCopy_Loc is not Empty?" sap:VirtualizedContainerService.HintSize="958,700" sap2010:WorkflowViewState.IdRef="If_11">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="TimePlan Output Copy Path Validation" sap:VirtualizedContainerService.HintSize="663,552" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:PathExists DisplayName="Path Exists" Exists="[Boolean_Path]" sap:VirtualizedContainerService.HintSize="621,89" sap2010:WorkflowViewState.IdRef="PathExists_3" Path="[TP_OutputCopy_Loc]" PathType="Folder">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:PathExists>
+                  <If Condition="[Boolean_Path]" DisplayName="If Time Plan Final Output Path Exist" sap:VirtualizedContainerService.HintSize="621,331" sap2010:WorkflowViewState.IdRef="If_10">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence sap:VirtualizedContainerService.HintSize="376,183" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_23" Level="Info" Message="[&quot;Timeplan OutPut Folder Path Validated for &quot;+Line_Name+&quot; - &quot;+TP_OutputCopy_Loc]" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Throw DisplayName="Throw - Ex" Exception="[New Exception(&quot;Incorrect Timeplan Output folder path- &quot;+TP_OutputCopy_Loc)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_9" />
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Throw DisplayName="Throw - Ex" Exception="[New Exception(&quot;Timeplan output file  Path is Empty for &quot;+Line_Name)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_10" />
+              </If.Else>
+            </If>
+            <If Condition="[SheetName_Line&lt;&gt;String.Empty]" DisplayName="If Time Plan Sheet Name is Not Empty?" sap:VirtualizedContainerService.HintSize="958,208" sap2010:WorkflowViewState.IdRef="If_7">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Else>
+                <Throw DisplayName="Throw - EX" Exception="[New Exception(&quot;Time Plan File Sheet Name is Empty For &quot;+Line_Name+&quot;.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_5" />
+              </If.Else>
+            </If>
+          </Sequence>
+          <Sequence DisplayName="TPP_TimePlan_Creation" sap:VirtualizedContainerService.HintSize="1268,4829" sap2010:WorkflowViewState.IdRef="Sequence_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[Partial_Check.ToString=&quot;No Partials&quot;]" sap:VirtualizedContainerService.HintSize="1226,1695" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="376,876" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Time Plan for&quot;+Line_Name+&quot; is created from the cutting list with no partials from the previous shift&quot;]" />
+                  <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sd:DataTable">[Unit_Scams_No_DT]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sd:DataTable">[Unit_Scams_No_DT_CL.AsEnumerable.Take(23).CopyToDataTable()]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[Unit_Scams_No_DT.Rows.Count.ToString+&quot; Records found for Unit and SCAMS No and will be transferred to final Timeplan of &quot;+Line_Name]" />
+                  <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sd:DataTable">[SPEC_TWL_DT]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sd:DataTable">[SPEC_TWL_DT_CL.AsEnumerable.Take(23).CopyToDataTable()]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[SPEC_TWL_DT.Rows.Count.ToString+&quot; Records found for Specification and will be transferred to final Timeplan of &quot;+Line_Name]" />
+                  <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sd:DataTable">[Lot_Qty_DT]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sd:DataTable">[Lot_Qty_DT_CL.AsEnumerable.Take(23).CopyToDataTable()]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[Lot_Qty_DT.Rows.Count.ToString+&quot; Records found for Lot Qty and will be transferred to final Timeplan of &quot;+Line_Name]" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap:VirtualizedContainerService.HintSize="418,1547" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="376,91" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;Time Plan for&quot;+Line_Name+&quot; is created from the cutting list with Partials from the previous shift&quot;]" />
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="376,91" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[Unit_Scams_No_DT_PAR.Rows.Count.ToString+&quot; Partial records are combined with &quot;+Unit_Scams_No_DT_CL.Rows.Count.ToString+&quot; Cutting List Records (Unit and SCAMS No). &quot;]" />
+                  <ui:MergeDataTable Destination="[Unit_Scams_No_DT_PAR]" DisplayName="Merge Data Table" sap:VirtualizedContainerService.HintSize="376,22" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[Unit_Scams_No_DT_CL]" />
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="376,91" sap2010:WorkflowViewState.IdRef="LogMessage_12" Level="Info" Message="[SPEC_TWL_DT_PAR.Rows.Count.ToString+&quot; Partial records are combined with &quot;+SPEC_TWL_DT_CL.rows.Count.ToString+&quot; Cutting List Records (Specification). &quot;]" />
+                  <ui:MergeDataTable Destination="[SPEC_TWL_DT_PAR]" DisplayName="Merge Data Table" sap:VirtualizedContainerService.HintSize="376,22" sap2010:WorkflowViewState.IdRef="MergeDataTable_2" MissingSchemaAction="Add" Source="[SPEC_TWL_DT_CL]" />
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="376,91" sap2010:WorkflowViewState.IdRef="LogMessage_14" Level="Info" Message="[Lot_Qty_DT_PAR.Rows.Count.ToString+&quot; Partial records are combined with &quot;+SPEC_TWL_DT_CL.rows.Count.ToString+&quot; Cutting List Records (Specification). &quot;]" />
+                  <ui:MergeDataTable Destination="[Lot_Qty_DT_PAR]" DisplayName="Merge Data Table" sap:VirtualizedContainerService.HintSize="376,22" sap2010:WorkflowViewState.IdRef="MergeDataTable_3" MissingSchemaAction="Add" Source="[Lot_Qty_DT_CL]" />
+                  <Sequence DisplayName="Final DataTable after  merging" sap:VirtualizedContainerService.HintSize="376,745" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="sd:DataTable">[Unit_Scams_No_DT]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="sd:DataTable">[Unit_Scams_No_DT_PAR.AsEnumerable.Take(24).CopyToDataTable()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="sd:DataTable">[SPEC_TWL_DT]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="sd:DataTable">[SPEC_TWL_DT_PAR.AsEnumerable.Take(24).CopyToDataTable()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="sd:DataTable">[Lot_Qty_DT]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="sd:DataTable">[Lot_Qty_DT_PAR.AsEnumerable.Take(24).CopyToDataTable()]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_16" Level="Info" Message="[Unit_Scams_No_DT.Rows.Count.ToString+&quot; Records found for Unit and SCAMS No and will be transferred to final Timeplan of &quot;+Line_Name]" />
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Info" Message="[SPEC_TWL_DT.Rows.Count.ToString+&quot; Records found for Specification and will be transferred to final Timeplan of &quot;+Line_Name]" />
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_18" Level="Info" Message="[Lot_Qty_DT.Rows.Count.ToString+&quot; Records found for Lot Qty and will be transferred to final Timeplan of &quot;+Line_Name]" />
+                  </Sequence>
+                </Sequence>
+              </If.Else>
+            </If>
+            <If Condition="[Unit_Scams_No_DT.Rows.Count=SPEC_TWL_DT.Rows.Count And SPEC_TWL_DT.Rows.Count=Lot_Qty_DT.Rows.Count]" sap:VirtualizedContainerService.HintSize="1226,3002" sap2010:WorkflowViewState.IdRef="If_9">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="981,2854" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Sequence sap:VirtualizedContainerService.HintSize="939,2762" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="897,91" sap2010:WorkflowViewState.IdRef="LogMessage_19" Level="Info" Message="[Unit_Scams_No_DT.Rows.Count.ToString+&quot; Records validated with uniform No of line items and found OK for final transfer to  &quot;+Line_Name+&quot; Timeplan.&quot;]" />
+                    <ui:WriteRange AddHeaders="False" DataTable="[Unit_Scams_No_DT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="[SheetName_Line]" StartingCell="F6" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <ui:WriteRange AddHeaders="False" DataTable="[SPEC_TWL_DT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteRange_2" SheetName="[SheetName_Line]" StartingCell="K6" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <ui:WriteRange AddHeaders="False" DataTable="[Lot_Qty_DT]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteRange_3" SheetName="[SheetName_Line]" StartingCell="P6" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <ui:WriteRange AddHeaders="False" DataTable="[Lot_Time_DT_CL]" DisplayName="Write Range" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteRange_4" SheetName="[SheetName_Line]" StartingCell="CJ6" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="897,91" sap2010:WorkflowViewState.IdRef="LogMessage_20" Level="Info" Message="[&quot;All records successfully pasted to final &quot;+Line_Name+&quot; Timeplan&quot;]" />
+                    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Macro Retry workflow" sap:VirtualizedContainerService.HintSize="897,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="True" WorkflowFileName="ProcessLogic\Macro Retry.xaml">
+                      <ui:InvokeWorkflowFile.Arguments>
+                        <InArgument x:TypeArguments="x:TimeSpan" x:Key="Macro_Timeout">00:00:30</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="File_Name">[TP_TempCopy_Loc]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="Macro_Name">TIME_ADJUSTOR</InArgument>
+                        <InArgument x:TypeArguments="scg:IEnumerable(x:Object)" x:Key="Macro_Parameters">[{Total_Time}]</InArgument>
+                        <OutArgument x:TypeArguments="x:String" x:Key="Out_Sheet_Name" />
+                      </ui:InvokeWorkflowFile.Arguments>
+                    </ui:InvokeWorkflowFile>
+                    <ui:ReadCell Cell="AG30" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="897,87" sap2010:WorkflowViewState.IdRef="ReadCell_1" SheetName="[SheetName_Line]" WorkbookPath="[TP_TempCopy_Loc]">
+                      <ui:ReadCell.Result>
+                        <OutArgument x:TypeArguments="x:Double">[Time]</OutArgument>
+                      </ui:ReadCell.Result>
+                    </ui:ReadCell>
+                    <ui:WriteCell Cell="J3" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteCell_1" SheetName="[SheetName_Line]" Text="[Run_Date.ToString(&quot;dd&quot;)]" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <ui:WriteCell Cell="K3" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteCell_2" SheetName="[SheetName_Line]" Text="[Run_Date.ToString(&quot;MM&quot;)]" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <ui:WriteCell Cell="l3" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteCell_3" SheetName="[SheetName_Line]" Text="[Run_Date.ToString(&quot;yyyy&quot;)]" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <ui:WriteCell Cell="o3" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteCell_4" SheetName="[SheetName_Line]" Text="[Run_Date.ToString(&quot;dddd&quot;)]" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <ui:WriteCell Cell="v3" DisplayName="Write Cell" sap:VirtualizedContainerService.HintSize="897,115" sap2010:WorkflowViewState.IdRef="WriteCell_5" SheetName="[SheetName_Line]" Text="[Shift]" WorkbookPath="[TP_TempCopy_Loc]" />
+                    <If Condition="[Time=0]" sap:VirtualizedContainerService.HintSize="897,759" sap2010:WorkflowViewState.IdRef="If_8">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="426,611" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:CopyFile ContinueOnError="{x:Null}" Destination="[TP_OutputCopy_Loc+&quot;\&quot;+Line_Name+&quot; Time Plan &quot;+Run_Date.ToString(&quot;dd-MMMM&quot;)+&quot; Shift-&quot;+Shift+ DateTime.Now.ToString(&quot; [hh.mm tt] &quot;)+&quot;.xlsm&quot;]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="384,157" sap2010:WorkflowViewState.IdRef="CopyFile_6" Overwrite="True" Path="[TP_TempCopy_Loc]" />
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="384,91" sap2010:WorkflowViewState.IdRef="LogMessage_24" Level="Fatal" Message="[&quot;Time Adjustor Macro run was unsuccessful.Please check Formula values&quot;]" />
+                          <Assign sap:VirtualizedContainerService.HintSize="384,60" sap2010:WorkflowViewState.IdRef="Assign_11">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[Final_Output_TimePlan_Path]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[TP_OutputCopy_Loc+"\"+Line_Name+" Time Plan "+Run_Date.ToString("dd-MMMM")+" Shift-"+Shift+ DateTime.Now.ToString(" [hh.mm tt] ")+".xlsm"]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="384,91" sap2010:WorkflowViewState.IdRef="LogMessage_26" Level="Info" Message="[&quot;Timeplan for &quot;+Line_Name+&quot; moved to Output folder with File Name &quot;+ Final_Output_TimePlan_Path]" />
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence sap:VirtualizedContainerService.HintSize="426,611" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:CopyFile ContinueOnError="{x:Null}" Destination="[TP_OutputCopy_Loc+&quot;\&quot;+Line_Name+&quot; Time Plan &quot;+Run_Date.ToString(&quot;dd&quot;)+&quot;-&quot;+Run_Date.ToString(&quot;MMMM&quot;)+&quot; Shift-&quot;+Shift+ DateTime.Now.ToString(&quot; [hh.mm tt] &quot;)+&quot;.xlsm&quot;]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="384,157" sap2010:WorkflowViewState.IdRef="CopyFile_5" Overwrite="True" Path="[TP_TempCopy_Loc]" />
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="384,91" sap2010:WorkflowViewState.IdRef="LogMessage_21" Level="Info" Message="[&quot;Time Adjustor Macro has run successfully and total time has been adjusted to &quot;+Math.Round(Time,2).ToString+ &quot; hrs.&quot;]" />
+                          <Assign sap:VirtualizedContainerService.HintSize="384,60" sap2010:WorkflowViewState.IdRef="Assign_10">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[Final_Output_TimePlan_Path]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[TP_OutputCopy_Loc+"\"+Line_Name+" Time Plan "+Run_Date.ToString("dd")+"-"+Run_Date.ToString("MMMM")+" Shift-"+Shift+ DateTime.Now.ToString(" [hh.mm tt] ")+".xlsm"]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="384,91" sap2010:WorkflowViewState.IdRef="LogMessage_25" Level="Info" Message="[&quot;Timeplan for &quot;+Line_Name+&quot; moved to Output folder with File Name &quot;+ Final_Output_TimePlan_Path]" />
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Throw Exception="[New Exception(&quot;Non uniform Line items found after processing records for &quot;+Line_Name+&quot;.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_7" />
+              </If.Else>
+            </If>
+          </Sequence>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="1314,314" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="System Exception" sap:VirtualizedContainerService.HintSize="376,245" sap2010:WorkflowViewState.IdRef="Sequence_15">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:String" Default="TPP_TimePlan_Creation" Name="strComponentName" />
+              </Sequence.Variables>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_22" Level="Error" Message="[strComponentName+&quot; Failed, Exception Details : &quot;+exception.Message]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:LogMessage>
+              <Throw DisplayName="Throw - SysEX" Exception="[New Exception(strComponentName+&quot; Failed, Exception Details : &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_8" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+      <TryCatch.Finally>
+        <Sequence DisplayName="Kill Excel" sap:VirtualizedContainerService.HintSize="376,245" sap2010:WorkflowViewState.IdRef="Sequence_21">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:KillProcess ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill Process" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="EXCEL" />
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_27" Level="Info" Message="[&quot;Excel Closed&quot;]" />
+        </Sequence>
+      </TryCatch.Finally>
+    </TryCatch>
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="1348,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Final Data transfer to &quot;+Line_Name+&quot; Timeplan has ended.&quot;]" />
+  </Sequence>
+</Activity>
