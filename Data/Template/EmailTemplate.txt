@@ -1,0 +1,19 @@
+<html>
+	<body>
+		<p>
+			Dear Team,
+			<br><br>
+			Please find below for the @ProcessName - @SubProcessName Processed Details
+			<br><br>
+			Process Name: @ProcessName
+			<br>
+			Sub Process: @SubProcessName
+			<br>
+			Status :@Status
+			<br>
+			@ExceptionMessage
+			<br><br>
+		</p>
+<p>This is an automated email, please do not reply to this email</p>
+	</body>
+</html>
