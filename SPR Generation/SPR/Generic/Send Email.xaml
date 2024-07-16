@@ -1,0 +1,415 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Send_Email" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="StrExceptionMessage" Type="InArgument(x:String)" />
+    <x:Property Name="StrExceptionType" Type="InArgument(x:String)" />
+    <x:Property Name="StrWorkEmailIDTo" Type="InArgument(x:String)" />
+    <x:Property Name="StrWorkEmailIDCc" Type="InArgument(x:String)" />
+    <x:Property Name="StrSubProcessName" Type="InArgument(x:String)" />
+    <x:Property Name="BolAttachment" Type="InArgument(x:Boolean)" />
+    <x:Property Name="StrAttachmentPath" Type="InArgument(x:String)" />
+    <x:Property Name="StrProcessWeek" Type="InArgument(x:String)" />
+    <x:Property Name="StrProcessDateCuttingListForm" Type="InArgument(x:String)" />
+    <x:Property Name="StrEmailTemplatePath" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>980.666666666667,5428</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>CloseAllApplications_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Description: Create Email body and Subject based on the Exception type and Send Email to Respective Team&#xA;&#xA;Pre Condition: N/A&#xA;Post Condtion: N/A" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="990.666666666667,5263.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="Send Email" Name="strComponentName" />
+      <Variable x:TypeArguments="x:String" Name="strYesterdayDate" />
+      <Variable x:TypeArguments="x:String" Default="Shift Wise Production Report" Name="StrProcessName" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="948.666666666667,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Send Email Started&quot;]" />
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="948.666666666667,4827.33333333333" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Variables>
+        <Variable x:TypeArguments="x:String" Name="strEmailSubject" />
+        <Variable x:TypeArguments="x:String" Default="&lt;html&gt;&#xA;&#x9;&lt;body&gt;&#xA;&#x9;&#x9;&lt;p&gt;&#xA;&#x9;&#x9;&#x9;Dear Team,&#xA;&#x9;&#x9;&#x9;&lt;br&gt;&lt;br&gt;&#xA;&#x9;&#x9;&#x9;Please find below for the @ProcessName - @SubProcessName Processed Details&#xA;&#x9;&#x9;&#x9;&lt;br&gt;&lt;br&gt;&#xA;&#x9;&#x9;&#x9;Process Name: @ProcessName&#xA;&#x9;&#x9;&#x9;&lt;br&gt;&#xA;&#x9;&#x9;&#x9;Sub Process: @SubProcessName&#xA;&#x9;&#x9;&#x9;&lt;br&gt;&#xA;&#x9;&#x9;&#x9;Status: @Status&#xA;&#x9;&#x9;&#x9;&lt;br&gt;&#xA;&#x9;&#x9;&#x9;@ExceptionMessage&#xA;&#x9;&#x9;&#x9;&lt;br&gt;&lt;br&gt;&#xA;&#x9;&#x9;&lt;/p&gt;&#xA;&lt;p&gt;This is an automated email, please do not reply to this email&lt;/p&gt;&#xA;&#x9;&lt;/body&gt;&#xA;&lt;/html&gt;&#xA;" Name="strEmailBody" />
+        <Variable x:TypeArguments="x:Boolean" Name="bolPathExist" />
+      </TryCatch.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <TryCatch.Try>
+        <Sequence DisplayName="Send Email Seq" sap:VirtualizedContainerService.HintSize="910,4590" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Pre Condition" sap:VirtualizedContainerService.HintSize="868,330" sap2010:WorkflowViewState.IdRef="Sequence_8">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[String.IsNullOrEmpty(StrExceptionType)]" DisplayName="If StrExceptionType is Empty" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_5">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;StrExceptionType Argument Passed as Empty&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
+              </If.Then>
+            </If>
+            <If Condition="[String.IsNullOrEmpty(StrWorkEmailIDTo)]" DisplayName="If StrWorkEmailIDTo is Empty" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_6">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;StrWorkEmailIDTo Argument Passed as Empty&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_3" />
+              </If.Then>
+            </If>
+            <If Condition="[String.IsNullOrEmpty(StrWorkEmailIDCc)]" DisplayName="If StrWorkEmailIDCc is Empty" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="If_7">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;StrWorkEmailIDCc Argument Passed as Empty&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_4" />
+              </If.Then>
+            </If>
+          </Sequence>
+          <If Condition="[String.IsNullOrEmpty(StrEmailTemplatePath)]" DisplayName="If EmailTemplatePath is Empty" sap:VirtualizedContainerService.HintSize="868,625.333333333333" sap2010:WorkflowViewState.IdRef="If_9">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;StrEmailTemplatePath Argument Passed as Empty&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_5" />
+            </If.Then>
+            <If.Else>
+              <Sequence sap:VirtualizedContainerService.HintSize="622,471.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:PathExists DisplayName="Path Exists" Exists="[bolPathExist]" sap:VirtualizedContainerService.HintSize="580,90.6666666666667" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="[StrEmailTemplatePath]" PathType="File" />
+                <If Condition="[bolPathExist]" sap:VirtualizedContainerService.HintSize="580,248.666666666667" sap2010:WorkflowViewState.IdRef="If_8">
+                  <If.Then>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Email Template found at &quot;+StrEmailTemplatePath]" />
+                  </If.Then>
+                  <If.Else>
+                    <Throw DisplayName="Throw - SysEx" Exception="[New Exception(&quot;Email template not found at &quot;+StrEmailTemplatePath)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_6" />
+                  </If.Else>
+                </If>
+              </Sequence>
+            </If.Else>
+          </If>
+          <Assign DisplayName="Assign StrEmailSubject" sap:VirtualizedContainerService.HintSize="868,62" sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[strEmailSubject]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[StrProcessName+"_"+StrSubProcessName+"_"+StrExceptionType]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:ReadTextFile Content="[strEmailBody]" DisplayName="Read Email Template" FileName="[StrEmailTemplatePath]" sap:VirtualizedContainerService.HintSize="868,80.6666666666667" sap2010:WorkflowViewState.IdRef="ReadTextFile_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:ReadTextFile>
+          <If Condition="[StrSubProcessName&lt;&gt;&quot;Itemwise Monthly Report&quot; and StrSubProcessName&lt;&gt;&quot;Itemwise Weekly Report&quot;]" DisplayName="If Daily Reports?" sap:VirtualizedContainerService.HintSize="868,216" sap2010:WorkflowViewState.IdRef="If_10">
+            <If.Then>
+              <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[strYesterdayDate]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[StrProcessDateCuttingListForm.Split("-"c)(2)+"-"+StrProcessDateCuttingListForm.Split("-"c)(1)+"-"+StrProcessDateCuttingListForm.Split("-"c)(0)]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </If.Then>
+          </If>
+          <If Condition="[StrExceptionType.Equals(&quot;Success&quot;)]" DisplayName="If Exception Type is Success" sap:VirtualizedContainerService.HintSize="868,1005.33333333333" sap2010:WorkflowViewState.IdRef="If_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence DisplayName="Create Email Body" sap:VirtualizedContainerService.HintSize="538,851.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:Replace DisplayName="Replace ProcessName" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_5" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ProcessName" RegexOption="IgnoreCase, Compiled" Replacement="[StrProcessName]" Result="[strEmailBody]" />
+                <ui:Replace DisplayName="Replace SubProcessName" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_6" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@SubProcessName" RegexOption="IgnoreCase, Compiled" Replacement="[If(String.IsNullOrEmpty(StrSubProcessName),&quot;-&quot;,StrSubProcessName)]" Result="[strEmailBody]" />
+                <ui:Replace DisplayName="Replace Status" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_7" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@Status" RegexOption="IgnoreCase, Compiled" Replacement="[StrExceptionType]" Result="[strEmailBody]" />
+                <Switch x:TypeArguments="x:String" DisplayName="Switch Process Date" Expression="[StrSubProcessName]" sap:VirtualizedContainerService.HintSize="496,266" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+                  <Switch.Default>
+                    <ui:Replace DisplayName="Replace Process Date" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_19" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ProcessDate" RegexOption="IgnoreCase, Compiled" Replacement="[&quot;Process Date &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;: &lt;b&gt;&quot;+strYesterdayDate+&quot;&lt;/b&gt;&quot;]" Result="[strEmailBody]" />
+                  </Switch.Default>
+                  <ui:Replace x:Key="Itemwise Weekly Report" DisplayName="Replace Process Week" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_22" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ProcessDate" RegexOption="IgnoreCase, Compiled" Replacement="[&quot;Process Week &amp;nbsp;&amp;nbsp;&amp;nbsp;: &lt;b&gt;&quot;+StrProcessWeek+&quot;&lt;/b&gt;&quot;]" Result="[strEmailBody]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:Replace>
+                  <ui:Replace x:Key="Itemwise Monthly Report" DisplayName="Replace Process Month" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_24" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ProcessDate" RegexOption="IgnoreCase, Compiled" Replacement="[&quot;Process Month &amp;nbsp;: &lt;b&gt;&quot;+Now.AddMonths(-1).ToString(&quot;MMMM&quot;)+&quot;&lt;/b&gt;&quot;]" Result="[strEmailBody]" />
+                </Switch>
+                <ui:Replace DisplayName="Replace FilePath" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_9" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@FilePath" RegexOption="IgnoreCase, Compiled" Replacement="[&quot;File Path &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;: &lt;b&gt;&lt;a href=&quot;&quot;&quot;+StrAttachmentPath+&quot;&quot;&quot;&gt;&quot;+StrAttachmentPath+&quot;&lt;/a&gt;&lt;/b&gt;&quot;]" Result="[strEmailBody]" />
+                <ui:Replace DisplayName="Replace ExceptionMessage" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_8" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ExceptionMessage" RegexOption="IgnoreCase, Compiled" Replacement="[String.Empty]" Result="[strEmailBody]" />
+              </Sequence>
+            </If.Then>
+          </If>
+          <If Condition="[StrExceptionType.Equals(&quot;ApplicationException&quot;) or StrExceptionType.Equals(&quot;SystemException&quot;)]" DisplayName="If Exception Type is Application or System Exception" sap:VirtualizedContainerService.HintSize="683,1132" sap2010:WorkflowViewState.IdRef="If_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence DisplayName="Create Email Body" sap:VirtualizedContainerService.HintSize="538,984" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:Replace DisplayName="Replace ProcessName" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_11" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ProcessName" RegexOption="IgnoreCase, Compiled" Replacement="[StrProcessName]" Result="[strEmailBody]" />
+                <ui:Replace DisplayName="Replace SubProcessName" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_12" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@SubProcessName" RegexOption="IgnoreCase, Compiled" Replacement="[If(String.IsNullOrEmpty(StrSubProcessName),&quot;-&quot;,StrSubProcessName)]" Result="[strEmailBody]" />
+                <ui:Replace DisplayName="Replace Status" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_13" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@Status" RegexOption="IgnoreCase, Compiled" Replacement="[StrExceptionType]" Result="[strEmailBody]" />
+                <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[StrSubProcessName]" sap:VirtualizedContainerService.HintSize="496,266" sap2010:WorkflowViewState.IdRef="Switch`1_2">
+                  <Switch.Default>
+                    <ui:Replace DisplayName="Replace Process Date" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_20" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ProcessDate" RegexOption="IgnoreCase, Compiled" Replacement="[&quot;Process Date &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;: &lt;b&gt;&quot;+strYesterdayDate+&quot;&lt;/b&gt;&quot;]" Result="[strEmailBody]" />
+                  </Switch.Default>
+                  <ui:Replace x:Key="Itemwise Weekly Report" DisplayName="Replace Process Week" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_21" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ProcessDate" RegexOption="IgnoreCase, Compiled" Replacement="[&quot;Process Week &amp;nbsp;&amp;nbsp;&amp;nbsp;: &lt;b&gt;&quot;+StrProcessWeek+&quot;&lt;/b&gt;&quot;]" Result="[strEmailBody]" />
+                  <ui:Replace x:Key="Itemwise Monthly Report" DisplayName="Replace Process Month" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="Replace_23" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ProcessDate" RegexOption="IgnoreCase, Compiled" Replacement="[&quot;Process Month &amp;nbsp;: &lt;b&gt;&quot;+Now.AddMonths(-1).ToString(&quot;MMMM&quot;)+&quot;&lt;/b&gt;&quot;]" Result="[strEmailBody]" />
+                </Switch>
+                <ui:Replace DisplayName="Replace FilePath" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_15" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@FilePath" RegexOption="IgnoreCase, Compiled" Replacement="[String.Empty]" Result="[strEmailBody]" />
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="496,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[StrExceptionMessage]" />
+                <ui:Replace DisplayName="Replace ExceptionMessage" sap:VirtualizedContainerService.HintSize="496,59" sap2010:WorkflowViewState.IdRef="Replace_4" Input="[strEmailBody]" IsBuilderTabModified="False" Pattern="@ExceptionMessage" RegexOption="IgnoreCase, Compiled" Replacement="[&quot;&lt;table&gt;&lt;tr style=&quot;&quot;color:red&quot;&quot;&gt;&lt;td&gt;&lt;b&gt;Exception Info &lt;/td&gt; &lt;td&gt; : &lt;/td&gt;&lt;td &gt;&quot; + StrExceptionMessage +&quot;&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&quot;]" Result="[strEmailBody]" />
+              </Sequence>
+            </If.Then>
+          </If>
+          <Flowchart DisplayName="Flowchart - Send Outlook Email" sap:VirtualizedContainerService.HintSize="683,636" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+                <av:Size x:Key="ShapeSize">60,75</av:Size>
+                <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,127.5</av:PointCollection>
+                <x:Double x:Key="Width">624</x:Double>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Flowchart.StartNode>
+              <x:Reference>__ReferenceID4</x:Reference>
+            </Flowchart.StartNode>
+            <FlowDecision x:Name="__ReferenceID4" Condition="[BolAttachment]" DisplayName="Is Attachment?" sap:VirtualizedContainerService.HintSize="85,87" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <av:Point x:Key="ShapeLocation">257.5,127.5</av:Point>
+                  <av:Size x:Key="ShapeSize">85,87</av:Size>
+                  <av:PointCollection x:Key="TrueConnector">257.5,171 207.5,171</av:PointCollection>
+                  <av:PointCollection x:Key="FalseConnector">342.5,171 620,171 620,420 590,420</av:PointCollection>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <FlowDecision.True>
+                <FlowStep x:Name="__ReferenceID1">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <av:Point x:Key="ShapeLocation">7.5,145.5</av:Point>
+                      <av:Size x:Key="ShapeSize">200,51</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">107.5,196.5 107.5,226.5 307.5,226.5 307.5,266.5</av:PointCollection>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:PathExists DisplayName="Path Exists" Exists="[bolPathExist]" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="[StrAttachmentPath]" PathType="File">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:PathExists>
+                  <FlowStep.Next>
+                    <FlowDecision x:Name="__ReferenceID2" Condition="[bolPathExist]" DisplayName="Attachment Available?" sap:VirtualizedContainerService.HintSize="125,87" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <av:Point x:Key="ShapeLocation">245,266.5</av:Point>
+                          <av:Size x:Key="ShapeSize">125,87</av:Size>
+                          <av:PointCollection x:Key="TrueConnector">245,310 200,310 200,394.5</av:PointCollection>
+                          <av:PointCollection x:Key="FalseConnector">370,310 490,310 490,394.5</av:PointCollection>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <FlowDecision.True>
+                        <FlowStep x:Name="__ReferenceID3">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <av:Point x:Key="ShapeLocation">100,394.5</av:Point>
+                              <av:Size x:Key="ShapeSize">200,51</av:Size>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="[strEmailBody]" Cc="[StrWorkEmailIDCc]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="True" IsDraft="False" Subject="[StrEmailSubject]" To="[StrWorkEmailIDTo]">
+                            <ui:SendOutlookMail.Files>
+                              <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+                                <InArgument x:TypeArguments="x:String">[StrAttachmentPath]</InArgument>
+                              </scg:List>
+                            </ui:SendOutlookMail.Files>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:SendOutlookMail>
+                        </FlowStep>
+                      </FlowDecision.True>
+                      <FlowDecision.False>
+                        <FlowStep x:Name="__ReferenceID0">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <av:Point x:Key="ShapeLocation">390,394.5</av:Point>
+                              <av:Size x:Key="ShapeSize">200,51</av:Size>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="[strEmailBody]" Cc="[StrWorkEmailIDCc]" DisplayName="Send Outlook Mail Message" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="SendOutlookMail_2" IsBodyHtml="True" IsDraft="False" Subject="[StrEmailSubject]" To="[StrWorkEmailIDTo]">
+                            <ui:SendOutlookMail.Files>
+                              <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4" />
+                            </ui:SendOutlookMail.Files>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:SendOutlookMail>
+                        </FlowStep>
+                      </FlowDecision.False>
+                    </FlowDecision>
+                  </FlowStep.Next>
+                </FlowStep>
+              </FlowDecision.True>
+              <FlowDecision.False>
+                <x:Reference>__ReferenceID0</x:Reference>
+              </FlowDecision.False>
+            </FlowDecision>
+            <x:Reference>__ReferenceID1</x:Reference>
+            <x:Reference>__ReferenceID2</x:Reference>
+            <x:Reference>__ReferenceID3</x:Reference>
+            <x:Reference>__ReferenceID0</x:Reference>
+          </Flowchart>
+          <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="658,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Send Email Success&quot;]" />
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="704,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="System Exception" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_7">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error" Message="[strComponentName+&quot; Failed, Exception Details : &quot;+exception.Message]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:LogMessage>
+              <Throw DisplayName="Throw - SysEX" Exception="[New Exception(strComponentName+&quot; Failed, Exception Details : &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="738,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Send Email Ended&quot;]" />
+  </Sequence>
+</Activity>

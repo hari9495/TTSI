@@ -1,0 +1,1153 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="SPT_Logic_PRseult_Slitting_Data_extraction" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="WbInputFileInstance" Type="InArgument(ui:WorkbookApplication)" />
+    <x:Property Name="ArrShiftNo" Type="InArgument(s:String[])" />
+    <x:Property Name="DtCuttingList" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="DtPanaboard" Type="InArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>2089,12275</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>SPT_Logic_PRseult_Slitting_Data_extraction_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="48">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="50">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Description: Slitting Data extraction from SCAMS&#xA;&#xA;Pre Condition: N/A&#xA;Post Condtion: N/A" DisplayName="SPR_Logic_PRseult_Slitting_Data_extraction" sap:VirtualizedContainerService.HintSize="2099,12110" sap2010:WorkflowViewState.IdRef="Sequence_43">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sd:DataTable" Name="dtPResultData" />
+      <Variable x:TypeArguments="s:String[]" Name="arrCLScamsNo" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="2057,11946" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <Sequence DisplayName="SPR_Logic_PRseult_Slitting_Data_extraction" sap:VirtualizedContainerService.HintSize="2019,11719" sap2010:WorkflowViewState.IdRef="Sequence_1">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:String" Name="strScamsNo" />
+            <Variable x:TypeArguments="x:String" Name="strAastate" />
+            <Variable x:TypeArguments="x:String" Name="strMotherCoilWeight" />
+            <Variable x:TypeArguments="x:String" Name="strRewindWeight" />
+            <Variable x:TypeArguments="x:String" Name="strDivide" />
+            <Variable x:TypeArguments="sd:DataTable" Name="dtQty" />
+            <Variable x:TypeArguments="x:Double" Default="0" Name="dblQtySum" />
+            <Variable x:TypeArguments="x:String" Name="strPlanYield" />
+            <Variable x:TypeArguments="x:String" Name="strLine" />
+            <Variable x:TypeArguments="x:String" Name="strMachineNo" />
+            <Variable x:TypeArguments="x:String" Name="strCoilNo" />
+            <Variable x:TypeArguments="x:String" Name="strMill" />
+            <Variable x:TypeArguments="x:String" Name="strSpecName" />
+            <Variable x:TypeArguments="x:String" Name="strMCThick" />
+            <Variable x:TypeArguments="x:String" Name="strMCWidth" />
+            <Variable x:TypeArguments="x:String" Name="strMCCoil" />
+            <Variable x:TypeArguments="x:String" Name="strActualYield" />
+            <Variable x:TypeArguments="x:String" Name="strSlitEdge" />
+            <Variable x:TypeArguments="x:String" Name="strMaterialActualCheckW" />
+            <Variable x:TypeArguments="x:Double" Default="0" Name="dblRejectedLength" />
+            <Variable x:TypeArguments="x:Double" Default="0" Name="dblRejectedLengthM" />
+            <Variable x:TypeArguments="x:String" Name="strRejectedLength" />
+            <Variable x:TypeArguments="x:String" Name="strAdjComment" />
+            <Variable x:TypeArguments="x:String" Name="strCoating" />
+            <Variable x:TypeArguments="x:Double" Name="dblRejectedLengthM1" />
+            <Variable x:TypeArguments="x:String" Name="strShift" />
+            <Variable x:TypeArguments="sd:DataTable" Name="dtCuttingListTemp" />
+            <Variable x:TypeArguments="x:Boolean" Name="boolDataNotFound" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Pre Condition" sap:VirtualizedContainerService.HintSize="1977,143" sap2010:WorkflowViewState.IdRef="Sequence_19">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="WindowScope_4" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='*' /&gt;">
+              <ui:WindowScope.Body>
+                <ActivityAction x:TypeArguments="x:Object">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="Navigate To PResult Slitting" sap:VirtualizedContainerService.HintSize="376,636" sap2010:WorkflowViewState.IdRef="Sequence_23">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click Prod Line" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_8" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="True">
+                      <ui:Click.CursorPosition>
+                        <ui:CursorPosition Position="Center">
+                          <ui:CursorPosition.OffsetX>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetX>
+                          <ui:CursorPosition.OffsetY>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetY>
+                        </ui:CursorPosition>
+                      </ui:Click.CursorPosition>
+                      <ui:Click.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="dc485817-a81d-470d-b785-6dc35f7b4516" InformativeScreenshot="b717b5a57607c076683c8161a9272051" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='mnuMain' /&gt;&lt;ctrl name='Prod Line' role='menu item' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:Click.Target>
+                    </ui:Click>
+                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click Production Result Entry" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_9" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="True">
+                      <ui:Click.CursorPosition>
+                        <ui:CursorPosition Position="Center">
+                          <ui:CursorPosition.OffsetX>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetX>
+                          <ui:CursorPosition.OffsetY>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetY>
+                        </ui:CursorPosition>
+                      </ui:Click.CursorPosition>
+                      <ui:Click.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0864adde-b859-4335-b576-4792d047d5e9" InformativeScreenshot="27ea416e697ce120344cfd24c50af1c7" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='mnuMain' /&gt;&lt;ctrl name='Prod Line' role='menu item' /&gt;&lt;ctrl name='Production Result Entry' role='menu item' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:Click.Target>
+                    </ui:Click>
+                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click Production Result(Slitting)" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_10" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="True">
+                      <ui:Click.CursorPosition>
+                        <ui:CursorPosition Position="Center">
+                          <ui:CursorPosition.OffsetX>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetX>
+                          <ui:CursorPosition.OffsetY>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetY>
+                        </ui:CursorPosition>
+                      </ui:Click.CursorPosition>
+                      <ui:Click.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="52b44812-9276-478a-9f7a-389c2ee927ec" InformativeScreenshot="5c923282eb1db540378c44d94d6f3a28" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='mnuMain' /&gt;&lt;ctrl name='Prod Line' role='menu item' /&gt;&lt;ctrl name='Production Result Entry' role='menu item' /&gt;&lt;ctrl name='Production Result(Slitting)' role='menu item' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:Click.Target>
+                    </ui:Click>
+                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_SINGLE" DisplayName="Click Search" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="Click_11" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="True">
+                      <ui:Click.CursorPosition>
+                        <ui:CursorPosition Position="Center">
+                          <ui:CursorPosition.OffsetX>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetX>
+                          <ui:CursorPosition.OffsetY>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:CursorPosition.OffsetY>
+                        </ui:CursorPosition>
+                      </ui:Click.CursorPosition>
+                      <ui:Click.Target>
+                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="dc1937e9-7429-49bb-88d3-3d8d830b42b2" InformativeScreenshot="8a7a4eb4430143859e2f7df34e32b446" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='toolStripTemplate' /&gt;&lt;ctrl name='Search  [S](F5)' role='push button' /&gt;">
+                          <ui:Target.TimeoutMS>
+                            <InArgument x:TypeArguments="x:Int32" />
+                          </ui:Target.TimeoutMS>
+                          <ui:Target.WaitForReady>
+                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                          </ui:Target.WaitForReady>
+                        </ui:Target>
+                      </ui:Click.Target>
+                    </ui:Click>
+                  </Sequence>
+                </ActivityAction>
+              </ui:WindowScope.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:WindowScope>
+          </Sequence>
+          <ui:ExcelApplicationScope Password="{x:Null}" WorkbookPath="{x:Null}" AutoSave="False" DisplayName="Excel Application Scope" ExistingWorkbook="[WbInputFileInstance]" sap:VirtualizedContainerService.HintSize="1977,11444" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_3">
+            <ui:ExcelApplicationScope.Body>
+              <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                </ActivityAction.Argument>
+                <Sequence sap:VirtualizedContainerService.HintSize="1943,11335" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each Shift" sap:VirtualizedContainerService.HintSize="1901,10320" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[ArrShiftNo]">
+                    <ui:ForEach.Body>
+                      <ActivityAction x:TypeArguments="x:Object">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Work" sap:VirtualizedContainerService.HintSize="1851,10187" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Assign sap:VirtualizedContainerService.HintSize="1809,60" sap2010:WorkflowViewState.IdRef="Assign_20">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[strShift]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[item.ToString]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Assign sap:VirtualizedContainerService.HintSize="1809,60" sap2010:WorkflowViewState.IdRef="Assign_14">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="sd:DataTable">[dtPResultData]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="sd:DataTable">[New DataTable()]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <Sequence sap:VirtualizedContainerService.HintSize="1809,9895" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Assign sap:VirtualizedContainerService.HintSize="1767,60" sap2010:WorkflowViewState.IdRef="Assign_24">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="sd:DataTable">[dtCuttingListTemp]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="sd:DataTable">[New DataTable()]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[(DtCuttingList.AsEnumerable().Where(function(r) r(&quot;Shift&quot;).ToString=strShift).count&gt;0) and (DtPanaboard.AsEnumerable().Where(function(r) r(&quot;Shift&quot;).ToString=strShift).Count&gt;0)]" DisplayName="If CuttingList and Panaboard Actual Details for Shift Available?" sap:VirtualizedContainerService.HintSize="1767,9703" sap2010:WorkflowViewState.IdRef="If_9">
+                              <If.Then>
+                                <Sequence sap:VirtualizedContainerService.HintSize="1388,9556" sap2010:WorkflowViewState.IdRef="Sequence_40">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <Assign sap:VirtualizedContainerService.HintSize="1346,60" sap2010:WorkflowViewState.IdRef="Assign_25">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="sd:DataTable">[dtCuttingListTemp]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="sd:DataTable">[DtCuttingList.AsEnumerable().Where(function(r) r("Shift").ToString=strShift).CopyToDataTable]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <Assign sap:VirtualizedContainerService.HintSize="1346,60" sap2010:WorkflowViewState.IdRef="Assign_31">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="s:String[]">[arrCLScamsNo]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="s:String[]">[dtCuttingListTemp.AsEnumerable.Select(Function(r) r("SCAMS No").ToString.Trim ).Distinct.ToArray]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="1346,9202" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[arrCLScamsNo]">
+                                    <ui:ForEach.Body>
+                                      <ActivityAction x:TypeArguments="x:Object">
+                                        <ActivityAction.Argument>
+                                          <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
+                                        </ActivityAction.Argument>
+                                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="1310,9069" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                          <Assign sap:VirtualizedContainerService.HintSize="1268,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:String">[strScamsNo]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:String">[item.ToString]</InArgument>
+                                            </Assign.Value>
+                                          </Assign>
+                                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="1268,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Extraction ScamsNo:&quot;+strScamsNo]" />
+                                          <Sequence sap:VirtualizedContainerService.HintSize="1268,8746" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" AlterIfDisabled="True" DisplayName="Type Into Scams No" EmptyField="True" sap:VirtualizedContainerService.HintSize="1226,134" sap2010:WorkflowViewState.IdRef="TypeInto_1" SimulateType="True" Text="[strScamsNo]">
+                                              <ui:TypeInto.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="87692a4d-abc5-4372-8085-8ee36400da51" InformativeScreenshot="2d03f0997dd73891526fbfed3586083d" Selector="&lt;wnd app='scamsf.exe' ctrlname='Z_PL_ProdResultC_S' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='txt_SCI_No' /&gt;">
+                                                  <ui:Target.TimeoutMS>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:Target.TimeoutMS>
+                                                  <ui:Target.WaitForReady>
+                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                  </ui:Target.WaitForReady>
+                                                </ui:Target>
+                                              </ui:TypeInto.Target>
+                                            </ui:TypeInto>
+                                            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" DisplayName="Send Hotkey Enter-ScamsNo Search Box" sap:VirtualizedContainerService.HintSize="1226,154" sap2010:WorkflowViewState.IdRef="SendHotkey_2" Key="enter" KeyModifiers="None" SpecialKey="True">
+                                              <ui:SendHotkey.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="32ce65b5-9b46-45f1-a4ec-37aaf55a8a5a" InformativeScreenshot="613b4b3a375c1ce9279c0804573bf5c8" Selector="&lt;wnd app='scamsf.exe' ctrlname='Z_PL_ProdResultC_S' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;">
+                                                  <ui:Target.TimeoutMS>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:Target.TimeoutMS>
+                                                  <ui:Target.WaitForReady>
+                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                  </ui:Target.WaitForReady>
+                                                </ui:Target>
+                                              </ui:SendHotkey.Target>
+                                            </ui:SendHotkey>
+                                            <ui:UiElementExists DisplayName="Element Exists 'dialog  Message'" Exists="[boolDataNotFound]" sap:VirtualizedContainerService.HintSize="1226,106" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+                                              <ui:UiElementExists.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="e8aa78db-f2f1-4f2e-9c4a-43ddf8734c76" InformativeScreenshot="e9154e38bf1cf0aa461487f2baa8bb92" Selector="&lt;wnd app='scamsf.exe' cls='#32770' title='Message' /&gt;" TimeoutMS="1000">
+                                                  <ui:Target.WaitForReady>
+                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                  </ui:Target.WaitForReady>
+                                                </ui:Target>
+                                              </ui:UiElementExists.Target>
+                                            </ui:UiElementExists>
+                                            <If Condition="[boolDataNotFound]" DisplayName="If Data Not Found Error?" sap:VirtualizedContainerService.HintSize="1226,455" sap2010:WorkflowViewState.IdRef="If_10">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <If.Then>
+                                                <Sequence sap:VirtualizedContainerService.HintSize="376,308" sap2010:WorkflowViewState.IdRef="Sequence_41">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" DisplayName="Send Hotkey 'SCAMSF.exe  Message'" sap:VirtualizedContainerService.HintSize="334,154" sap2010:WorkflowViewState.IdRef="SendHotkey_3" Key="enter" KeyModifiers="None" SpecialKey="True">
+                                                    <ui:SendHotkey.Target>
+                                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="0193fc7e-b597-49fa-9682-9d1cc9deb0e1" InformativeScreenshot="e9154e38bf1cf0aa461487f2baa8bb92" Selector="&lt;wnd app='scamsf.exe' cls='#32770' title='Message' /&gt;">
+                                                        <ui:Target.TimeoutMS>
+                                                          <InArgument x:TypeArguments="x:Int32" />
+                                                        </ui:Target.TimeoutMS>
+                                                        <ui:Target.WaitForReady>
+                                                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                        </ui:Target.WaitForReady>
+                                                      </ui:Target>
+                                                    </ui:SendHotkey.Target>
+                                                  </ui:SendHotkey>
+                                                  <ui:Continue sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Continue_1" />
+                                                </Sequence>
+                                              </If.Then>
+                                            </If>
+                                            <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_DOUBLE" DisplayName="Double Click Scams No Row" sap:VirtualizedContainerService.HintSize="1226,106" sap2010:WorkflowViewState.IdRef="Click_2" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                              <ui:Click.CursorPosition>
+                                                <ui:CursorPosition Position="Center">
+                                                  <ui:CursorPosition.OffsetX>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:CursorPosition.OffsetX>
+                                                  <ui:CursorPosition.OffsetY>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:CursorPosition.OffsetY>
+                                                </ui:CursorPosition>
+                                              </ui:Click.CursorPosition>
+                                              <ui:Click.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="a081b199-eed1-410f-910d-bee57aa95f07" InformativeScreenshot="a229cdfa5fbc3dab247a559c6ce9c67f" Selector="[&quot;&lt;wnd app='scamsf.exe' ctrlname='Z_PL_ProdResultC_S' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='dgv_List' /&gt;&lt;ctrl name='DataGridView' role='table' /&gt;&lt;ctrl role='cell' text='&quot;+strScamsNo+&quot;' /&gt;&quot;]" WaitForReady="COMPLETE">
+                                                  <ui:Target.TimeoutMS>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:Target.TimeoutMS>
+                                                </ui:Target>
+                                              </ui:Click.Target>
+                                            </ui:Click>
+                                            <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" AlterIfDisabled="True" ClickType="CLICK_DOUBLE" DisplayName="Double Click Scams No Row" sap:VirtualizedContainerService.HintSize="1226,106" sap2010:WorkflowViewState.IdRef="Click_12" KeyModifiers="None" MouseButton="BTN_LEFT">
+                                              <ui:Click.CursorPosition>
+                                                <ui:CursorPosition Position="Center">
+                                                  <ui:CursorPosition.OffsetX>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:CursorPosition.OffsetX>
+                                                  <ui:CursorPosition.OffsetY>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:CursorPosition.OffsetY>
+                                                </ui:CursorPosition>
+                                              </ui:Click.CursorPosition>
+                                              <ui:Click.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="a081b199-eed1-410f-910d-bee57aa95f07" InformativeScreenshot="a229cdfa5fbc3dab247a559c6ce9c67f" Selector="[&quot;&lt;wnd app='scamsf.exe' ctrlname='Z_PL_ProdResultC_S' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='dgv_List' /&gt;&lt;ctrl name='DataGridView' role='table' /&gt;&lt;ctrl role='cell' text='&quot;+strScamsNo+&quot;' /&gt;&quot;]" WaitForReady="COMPLETE">
+                                                  <ui:Target.TimeoutMS>
+                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                  </ui:Target.TimeoutMS>
+                                                </ui:Target>
+                                              </ui:Click.Target>
+                                            </ui:Click>
+                                            <ui:WaitUiElementAppear FoundElement="{x:Null}" WaitActive="{x:Null}" WaitVisible="{x:Null}" DisplayName="Find Element ScamsNo" sap:VirtualizedContainerService.HintSize="1226,106" sap2010:WorkflowViewState.IdRef="WaitUiElementAppear_1">
+                                              <ui:WaitUiElementAppear.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="eb124945-cc5c-45a4-8a40-423d11862cba" InformativeScreenshot="d524cc208f88491a5bea698ce2412d7b" Selector="[&quot;&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox1' /&gt;&lt;wnd ctrlname='txt_SCI_No' /&gt;&lt;ctrl name='SCAMS No' role='text' text='&quot;+strScamsNo+&quot;' /&gt;&quot;]" TimeoutMS="240000">
+                                                  <ui:Target.WaitForReady>
+                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                  </ui:Target.WaitForReady>
+                                                </ui:Target>
+                                              </ui:WaitUiElementAppear.Target>
+                                            </ui:WaitUiElementAppear>
+                                            <ui:GetAttribute ContinueOnError="{x:Null}" Attribute="aastate" DisplayName="Get Attribute Completed Flag" sap:VirtualizedContainerService.HintSize="1226,134" sap2010:WorkflowViewState.IdRef="GetAttribute_1">
+                                              <ui:GetAttribute.Result>
+                                                <OutArgument x:TypeArguments="x:String">[strAastate]</OutArgument>
+                                              </ui:GetAttribute.Result>
+                                              <ui:GetAttribute.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="fa3117ab-6353-42be-ae30-544baef1bd19" InformativeScreenshot="b304569d0686151677e605559b3dc834" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox1' /&gt;&lt;wnd ctrlname='chk_CompletedFlag' /&gt;" TimeoutMS="240000">
+                                                  <ui:Target.WaitForReady>
+                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                  </ui:Target.WaitForReady>
+                                                </ui:Target>
+                                              </ui:GetAttribute.Target>
+                                            </ui:GetAttribute>
+                                            <If Condition="[strAastate.ToUpper.Trim.Contains(&quot;CHECKED&quot;)]" DisplayName="If Completed Flag checkbox is Checked?" sap:VirtualizedContainerService.HintSize="1226,7033" sap2010:WorkflowViewState.IdRef="If_2">
+                                              <If.Then>
+                                                <Sequence sap:VirtualizedContainerService.HintSize="847,6886" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <Sequence DisplayName="Data Scraping" sap:VirtualizedContainerService.HintSize="805,6794" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'FrmMain Scamsf'" sap:VirtualizedContainerService.HintSize="763,6702" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="90b9a445b728f4b9848d4d2340ef5134" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;" TimeoutMS="240000">
+                                                      <ui:WindowScope.Body>
+                                                        <ActivityAction x:TypeArguments="x:Object">
+                                                          <ActivityAction.Argument>
+                                                            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                                          </ActivityAction.Argument>
+                                                          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="729,6556" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                                                            <sap:WorkflowViewStateService.ViewState>
+                                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                              </scg:Dictionary>
+                                                            </sap:WorkflowViewStateService.ViewState>
+                                                            <Assign sap:VirtualizedContainerService.HintSize="687,60" sap2010:WorkflowViewState.IdRef="Assign_19">
+                                                              <Assign.To>
+                                                                <OutArgument x:TypeArguments="sd:DataTable">[dtPResultData]</OutArgument>
+                                                              </Assign.To>
+                                                              <Assign.Value>
+                                                                <InArgument x:TypeArguments="sd:DataTable">[New DataTable()]</InArgument>
+                                                              </Assign.Value>
+                                                            </Assign>
+                                                            <ui:ExtractData DelayBetweenPagesMS="{x:Null}" NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[dtPResultData]" DisplayName="Extract Structured Data 'table  DataGridView'" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest' /&gt;" sap:VirtualizedContainerService.HintSize="687,106" sap2010:WorkflowViewState.IdRef="ExtractData_1" MaxNumberOfResults="0" SimulateClick="True">
+                                                              <ui:ExtractData.Target>
+                                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="66b50675-78da-4e84-bfb6-564f0a751430" InformativeScreenshot="5f230cfc956e8ea1d6500c9695c4c198" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='dgv_PI_Result' /&gt;&lt;ctrl name='DataGridView' role='table' /&gt;">
+                                                                  <ui:Target.TimeoutMS>
+                                                                    <InArgument x:TypeArguments="x:Int32" />
+                                                                  </ui:Target.TimeoutMS>
+                                                                  <ui:Target.WaitForReady>
+                                                                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                  </ui:Target.WaitForReady>
+                                                                </ui:Target>
+                                                              </ui:ExtractData.Target>
+                                                            </ui:ExtractData>
+                                                            <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="CLScamsNo" DataTable="[dtPResultData]" DefaultValue="[strScamsNo]" DisplayName="Add Data Column CLScamsNo" sap:VirtualizedContainerService.HintSize="687,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_6" />
+                                                            <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="CLUnitNo" DataTable="[dtPResultData]" DefaultValue="[&quot;&quot;]" DisplayName="Add Data Column CLUnitNo" sap:VirtualizedContainerService.HintSize="687,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_28" />
+                                                            <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'WindowsForms10.Window.8...'" sap:VirtualizedContainerService.HintSize="687,5967" sap2010:WorkflowViewState.IdRef="WindowScope_5" InformativeScreenshot="a00f0314be662025b3fd9e5264bd6c33" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;">
+                                                              <ui:WindowScope.Body>
+                                                                <ActivityAction x:TypeArguments="x:Object">
+                                                                  <ActivityAction.Argument>
+                                                                    <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                                                  </ActivityAction.Argument>
+                                                                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="653,5821" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                                                                    <sap:WorkflowViewStateService.ViewState>
+                                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                      </scg:Dictionary>
+                                                                    </sap:WorkflowViewStateService.ViewState>
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Mother Coil Weight" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_25">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="9c47c85f-cfc7-4f12-98a9-2f383049fa5d" InformativeScreenshot="f6536cd62eebb23042eab069aa181d7e" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox3' /&gt;&lt;wnd ctrlname='txt_Weight' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strMotherCoilWeight]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="MotherCoilWeight" DataTable="[dtPResultData]" DefaultValue="[strMotherCoilWeight]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_30" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Rewind Weight" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_26">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="b2848194-c6e0-4497-a151-3bd49096cf65" InformativeScreenshot="11642de2bcbb9bc3e031c76d06c844c2" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_Rewind' /&gt;&lt;wnd ctrlname='txt_RWeightAct' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strRewindWeight]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="RewindWeight" DataTable="[dtPResultData]" DefaultValue="[strRewindWeight]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_31" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Divide" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_27">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="989bdf61-c0ee-4a04-8354-ff9ad1cbe144" InformativeScreenshot="8086311f0306500505a698ed8e61e719" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox2' /&gt;&lt;wnd ctrlname='txt_Divide' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strDivide]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Divide" DataTable="[dtPResultData]" DefaultValue="[strDivide]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_32" />
+                                                                    <Sequence DisplayName="Data Scraping Qty" sap:VirtualizedContainerService.HintSize="611,636" sap2010:WorkflowViewState.IdRef="Sequence_37">
+                                                                      <sap:WorkflowViewStateService.ViewState>
+                                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                        </scg:Dictionary>
+                                                                      </sap:WorkflowViewStateService.ViewState>
+                                                                      <Assign sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_29">
+                                                                        <Assign.To>
+                                                                          <OutArgument x:TypeArguments="sd:DataTable">[dtQty]</OutArgument>
+                                                                        </Assign.To>
+                                                                        <Assign.Value>
+                                                                          <InArgument x:TypeArguments="sd:DataTable">[New DataTable()]</InArgument>
+                                                                        </Assign.Value>
+                                                                      </Assign>
+                                                                      <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'FrmMain Scamsf'" sap:VirtualizedContainerService.HintSize="434,444" sap2010:WorkflowViewState.IdRef="WindowScope_6" InformativeScreenshot="0867131474e3f045200611442a545e2e" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;">
+                                                                        <ui:WindowScope.Body>
+                                                                          <ActivityAction x:TypeArguments="x:Object">
+                                                                            <ActivityAction.Argument>
+                                                                              <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                                                            </ActivityAction.Argument>
+                                                                            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,298" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                </scg:Dictionary>
+                                                                              </sap:WorkflowViewStateService.ViewState>
+                                                                              <ui:ExtractData DelayBetweenPagesMS="{x:Null}" NextLinkSelector="{x:Null}" ContinueOnError="True" DataTable="[dtQty]" DisplayName="Extract Structured Data 'table  DataGridView'" ExtractMetadata="&lt;extract-table get_columns_name='1' get_empty_columns='1' columns_name_source='Longest' /&gt;" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="ExtractData_4" MaxNumberOfResults="0" SimulateClick="True">
+                                                                                <ui:ExtractData.Target>
+                                                                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="072a10a6-b311-462b-877d-9594ad20f7d6" InformativeScreenshot="ff886f21b0d345d35941346343217ae0" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_SetUp' /&gt;&lt;wnd ctrlname='dgv_SetUp' /&gt;&lt;ctrl name='DataGridView' role='table' /&gt;">
+                                                                                    <ui:Target.TimeoutMS>
+                                                                                      <InArgument x:TypeArguments="x:Int32" />
+                                                                                    </ui:Target.TimeoutMS>
+                                                                                    <ui:Target.WaitForReady>
+                                                                                      <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                                    </ui:Target.WaitForReady>
+                                                                                  </ui:Target>
+                                                                                </ui:ExtractData.Target>
+                                                                              </ui:ExtractData>
+                                                                              <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_30">
+                                                                                <Assign.To>
+                                                                                  <OutArgument x:TypeArguments="x:Double">[dblQtySum]</OutArgument>
+                                                                                </Assign.To>
+                                                                                <Assign.Value>
+                                                                                  <InArgument x:TypeArguments="x:Double">[dtQty.AsEnumerable.Sum(Function (x) If(Double.TryParse(x.item("Qty").ToString, Nothing), Double.Parse(x.Item("Qty").ToString), 0))]</InArgument>
+                                                                                </Assign.Value>
+                                                                              </Assign>
+                                                                            </Sequence>
+                                                                          </ActivityAction>
+                                                                        </ui:WindowScope.Body>
+                                                                      </ui:WindowScope>
+                                                                    </Sequence>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Qty" DataTable="[dtPResultData]" DefaultValue="[dblQtySum]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_33" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Yield Plan" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_28">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="6ea0c3e5-2605-4e03-9805-e593eec26250" InformativeScreenshot="ff83a38d29b17c9a157e2ae235257219" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_Yields' /&gt;&lt;wnd ctrlname='txt_YieldsPlan' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strPlanYield]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="PlanYield" DataTable="[dtPResultData]" DefaultValue="[strPlanYield]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_34" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Line" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_29">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="7119846a-8e51-40ab-924c-addf9dc70b8d" InformativeScreenshot="c7540a99e971cd75be7ff0c3e923b20b" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox1' /&gt;&lt;wnd ctrlname='txt_Line' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strLine]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Line" DataTable="[dtPResultData]" DefaultValue="[strLine]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_35" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Machine No" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_30">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d678852c-c9b6-4492-bd57-1e0f7d345626" InformativeScreenshot="c9791e79364aa2bac100734aea489430" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox1' /&gt;&lt;wnd ctrlname='cmb_LineNo' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strMachineNo]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="MachineNumber" DataTable="[dtPResultData]" DefaultValue="[strMachineNo]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_36" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Coil No" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_31">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="113f0a81-9c09-4b04-b377-29a07e961781" InformativeScreenshot="16f68798e3879574583e38b705c44781" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox3' /&gt;&lt;wnd ctrlname='txt_CoilNo' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strCoilNo]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="CoilNo" DataTable="[dtPResultData]" DefaultValue="[strCoilNo]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_37" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Mill" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_32">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="5a2a3333-2b19-4df3-b8cd-07e850d37061" InformativeScreenshot="a4494e92a338fee2b530b1ad8268e000" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox3' /&gt;&lt;wnd ctrlname='txt_MakerCode' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strMill]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Mill" DataTable="[dtPResultData]" DefaultValue="[strMill]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_38" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Spec Name" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_33">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="158a56e9-d06f-42b7-a9fa-aafefcb6c789" InformativeScreenshot="933f30ecca10b7b5944b0e3d365484b2" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox3' /&gt;&lt;wnd ctrlname='txt_SpecName' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strSpecName]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="SpecName" DataTable="[dtPResultData]" DefaultValue="[strSpecName]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_39" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Coating" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_34">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="158a56e9-d06f-42b7-a9fa-aafefcb6c789" InformativeScreenshot="00bf12ca632bde16440e4dc6e15db06b" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox3' /&gt;&lt;wnd ctrlname='txt_Coating' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strCoating]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Coating" DataTable="[dtPResultData]" DefaultValue="[strCoating]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_40" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text MC Thick" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_35">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="ca5d48ca-f2d5-42d0-98d8-7f5199298c9b" InformativeScreenshot="2335833be08238f45dfe2dbdd04597e8" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox3' /&gt;&lt;wnd ctrlname='txt_Thick' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strMCThick]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="MCThick" DataTable="[dtPResultData]" DefaultValue="[strMCThick]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_41" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text MCWidth" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_36">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d48aae74-e9b8-494f-8899-8df76482832f" InformativeScreenshot="0789c93515a1dbe8952939060662cbac" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox3' /&gt;&lt;wnd ctrlname='txt_Width' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strMCWidth]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="MCWidth" DataTable="[dtPResultData]" DefaultValue="[strMCWidth]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_42" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text MCCoil" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_37">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="d96f8d92-eb07-4696-8045-4a13184273b1" InformativeScreenshot="87f6d4facb9836cd17e6949829208349" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox3' /&gt;&lt;wnd ctrlname='txt_Length1' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strMCCoil]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="MCCoil" DataTable="[dtPResultData]" DefaultValue="[strMCCoil]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_43" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Actual Yield" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_38">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="aa0b0d20-b045-4d26-ac2e-c059cf10ee96" InformativeScreenshot="b1c3dc2070c7b1ff61b190974269a7c0" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_Yields' /&gt;&lt;wnd ctrlname='txt_YieldsAct' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strActualYield]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="ActualYield" DataTable="[dtPResultData]" DefaultValue="[strActualYield]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_44" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Adjust Comment-Yield Comment" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_39">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="2fe64daa-a276-4572-ab3c-6179617d3caa" InformativeScreenshot="8458e65804388ad4595293a1f14a92be" Selector="&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_Remark' /&gt;&lt;wnd ctrlname='txt_YieldsRemark' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strAdjComment]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="AdjComment" DataTable="[dtPResultData]" DefaultValue="[strAdjComment]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_45" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Slit Edge" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_40">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="967d2417-85e4-48dc-b4bb-ed57a6143b16" InformativeScreenshot="dc76db50a6c8885d84421db30ade06c6" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='groupBox4' /&gt;&lt;wnd ctrlname='txt_Mimi' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strSlitEdge]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="SlitEdge" DataTable="[dtPResultData]" DefaultValue="[strSlitEdge]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_46" />
+                                                                    <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Material Actual Check W" sap:VirtualizedContainerService.HintSize="611,106" sap2010:WorkflowViewState.IdRef="GetValue_41">
+                                                                      <ui:GetValue.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="f8877685-0b08-4f2b-baef-8e35864bafcc" InformativeScreenshot="002add732900ce63d11d8264712192ef" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_MatCheck' /&gt;&lt;wnd ctrlname='txt_T_W' /&gt;">
+                                                                          <ui:Target.TimeoutMS>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:Target.TimeoutMS>
+                                                                          <ui:Target.WaitForReady>
+                                                                            <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                          </ui:Target.WaitForReady>
+                                                                        </ui:Target>
+                                                                      </ui:GetValue.Target>
+                                                                      <ui:GetValue.Value>
+                                                                        <OutArgument x:TypeArguments="x:String">[strMaterialActualCheckW]</OutArgument>
+                                                                      </ui:GetValue.Value>
+                                                                    </ui:GetValue>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="MaterialActualCheckW" DataTable="[dtPResultData]" DefaultValue="[strMaterialActualCheckW]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_23" />
+                                                                    <Sequence DisplayName="Rejected Length Calculation" sap:VirtualizedContainerService.HintSize="611,1331" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                                                                      <sap:WorkflowViewStateService.ViewState>
+                                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                        </scg:Dictionary>
+                                                                      </sap:WorkflowViewStateService.ViewState>
+                                                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Rejected Length T" sap:VirtualizedContainerService.HintSize="569,106" sap2010:WorkflowViewState.IdRef="GetValue_18">
+                                                                        <ui:GetValue.Target>
+                                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="6b8efc6d-e620-4739-a01a-2fb2cdce0573" InformativeScreenshot="d5d64c7584c3ec0ad15edf6a13596dd9" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_Reject' /&gt;&lt;wnd ctrlname='txt_T_RejectLength' /&gt;" WaitForReady="NONE">
+                                                                            <ui:Target.TimeoutMS>
+                                                                              <InArgument x:TypeArguments="x:Int32" />
+                                                                            </ui:Target.TimeoutMS>
+                                                                          </ui:Target>
+                                                                        </ui:GetValue.Target>
+                                                                        <ui:GetValue.Value>
+                                                                          <OutArgument x:TypeArguments="x:String">[strRejectedLength]</OutArgument>
+                                                                        </ui:GetValue.Value>
+                                                                      </ui:GetValue>
+                                                                      <If Condition="[strRejectedLength.Trim&lt;&gt;string.Empty]" sap:VirtualizedContainerService.HintSize="569,207" sap2010:WorkflowViewState.IdRef="If_3">
+                                                                        <If.Then>
+                                                                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                                                                            <Assign.To>
+                                                                              <OutArgument x:TypeArguments="x:Double">[dblRejectedLength]</OutArgument>
+                                                                            </Assign.To>
+                                                                            <Assign.Value>
+                                                                              <InArgument x:TypeArguments="x:Double">[Convert.ToDouble(strRejectedLength.Trim)]</InArgument>
+                                                                            </Assign.Value>
+                                                                          </Assign>
+                                                                        </If.Then>
+                                                                        <If.Else>
+                                                                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+                                                                            <Assign.To>
+                                                                              <OutArgument x:TypeArguments="x:Double">[dblRejectedLength]</OutArgument>
+                                                                            </Assign.To>
+                                                                            <Assign.Value>
+                                                                              <InArgument x:TypeArguments="x:Double">0</InArgument>
+                                                                            </Assign.Value>
+                                                                          </Assign>
+                                                                        </If.Else>
+                                                                      </If>
+                                                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Rejected Length M" sap:VirtualizedContainerService.HintSize="569,106" sap2010:WorkflowViewState.IdRef="GetValue_19">
+                                                                        <ui:GetValue.Target>
+                                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="4f8b1441-c07c-444d-836f-f9f42fdb2677" InformativeScreenshot="7f84a7845bfa839a6a0845ef5aa9a93e" Selector="&lt;wnd app='scamsf.exe' ctrlname='FrmMain' /&gt;&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_Reject' /&gt;&lt;wnd ctrlname='txt_M_RejectLength' /&gt;">
+                                                                            <ui:Target.TimeoutMS>
+                                                                              <InArgument x:TypeArguments="x:Int32" />
+                                                                            </ui:Target.TimeoutMS>
+                                                                            <ui:Target.WaitForReady>
+                                                                              <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                            </ui:Target.WaitForReady>
+                                                                          </ui:Target>
+                                                                        </ui:GetValue.Target>
+                                                                        <ui:GetValue.Value>
+                                                                          <OutArgument x:TypeArguments="x:String">[strRejectedLength]</OutArgument>
+                                                                        </ui:GetValue.Value>
+                                                                      </ui:GetValue>
+                                                                      <If Condition="[strRejectedLength.Trim&lt;&gt;string.Empty]" sap:VirtualizedContainerService.HintSize="569,207" sap2010:WorkflowViewState.IdRef="If_4">
+                                                                        <If.Then>
+                                                                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+                                                                            <Assign.To>
+                                                                              <OutArgument x:TypeArguments="x:Double">[dblRejectedLengthM]</OutArgument>
+                                                                            </Assign.To>
+                                                                            <Assign.Value>
+                                                                              <InArgument x:TypeArguments="x:Double">[Convert.ToDouble(strRejectedLength.Trim)]</InArgument>
+                                                                            </Assign.Value>
+                                                                          </Assign>
+                                                                        </If.Then>
+                                                                        <If.Else>
+                                                                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_10">
+                                                                            <Assign.To>
+                                                                              <OutArgument x:TypeArguments="x:Double">[dblRejectedLengthM]</OutArgument>
+                                                                            </Assign.To>
+                                                                            <Assign.Value>
+                                                                              <InArgument x:TypeArguments="x:Double">0</InArgument>
+                                                                            </Assign.Value>
+                                                                          </Assign>
+                                                                        </If.Else>
+                                                                      </If>
+                                                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text Rejected Length M1" sap:VirtualizedContainerService.HintSize="569,106" sap2010:WorkflowViewState.IdRef="GetValue_23">
+                                                                        <ui:GetValue.Target>
+                                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="6b8efc6d-e620-4739-a01a-2fb2cdce0573" InformativeScreenshot="9c2e772ca84af8d88a7fedca580b7348" Selector="&lt;wnd ctrlname='Z_PL_ProdResultC_M' /&gt;&lt;wnd ctrlname='groupBoxTemplate' /&gt;&lt;wnd ctrlname='panelTemplate' /&gt;&lt;wnd ctrlname='gb_Reject' /&gt;&lt;wnd ctrlname='txt_E_RejectLength' /&gt;">
+                                                                            <ui:Target.TimeoutMS>
+                                                                              <InArgument x:TypeArguments="x:Int32" />
+                                                                            </ui:Target.TimeoutMS>
+                                                                            <ui:Target.WaitForReady>
+                                                                              <InArgument x:TypeArguments="ui:WaitForReady" />
+                                                                            </ui:Target.WaitForReady>
+                                                                          </ui:Target>
+                                                                        </ui:GetValue.Target>
+                                                                        <ui:GetValue.Value>
+                                                                          <OutArgument x:TypeArguments="x:String">[strRejectedLength]</OutArgument>
+                                                                        </ui:GetValue.Value>
+                                                                      </ui:GetValue>
+                                                                      <If Condition="[strRejectedLength.Trim&lt;&gt;string.Empty]" sap:VirtualizedContainerService.HintSize="569,207" sap2010:WorkflowViewState.IdRef="If_6">
+                                                                        <If.Then>
+                                                                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_15">
+                                                                            <Assign.To>
+                                                                              <OutArgument x:TypeArguments="x:Double">[dblRejectedLengthM1]</OutArgument>
+                                                                            </Assign.To>
+                                                                            <Assign.Value>
+                                                                              <InArgument x:TypeArguments="x:Double">[Convert.ToDouble(strRejectedLength.Trim)]</InArgument>
+                                                                            </Assign.Value>
+                                                                          </Assign>
+                                                                        </If.Then>
+                                                                        <If.Else>
+                                                                          <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_16">
+                                                                            <Assign.To>
+                                                                              <OutArgument x:TypeArguments="x:Double">[dblRejectedLengthM1]</OutArgument>
+                                                                            </Assign.To>
+                                                                            <Assign.Value>
+                                                                              <InArgument x:TypeArguments="x:Double">0</InArgument>
+                                                                            </Assign.Value>
+                                                                          </Assign>
+                                                                        </If.Else>
+                                                                      </If>
+                                                                      <Assign sap:VirtualizedContainerService.HintSize="569,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                                                                        <Assign.To>
+                                                                          <OutArgument x:TypeArguments="x:Double">[dblRejectedLength]</OutArgument>
+                                                                        </Assign.To>
+                                                                        <Assign.Value>
+                                                                          <InArgument x:TypeArguments="x:Double">[dblRejectedLength+dblRejectedLengthM+dblRejectedLengthM1]</InArgument>
+                                                                        </Assign.Value>
+                                                                      </Assign>
+                                                                    </Sequence>
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="RejectedLength" DataTable="[dtPResultData]" DefaultValue="[dblRejectedLength]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_24" />
+                                                                    <ui:AddDataColumn x:TypeArguments="x:Object" AllowDBNull="{x:Null}" AutoIncrement="{x:Null}" Column="{x:Null}" MaxLength="{x:Null}" Unique="{x:Null}" ColumnName="Shift" DataTable="[dtPResultData]" DefaultValue="[strShift]" DisplayName="Add Data Column Shift" sap:VirtualizedContainerService.HintSize="611,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_29" />
+                                                                  </Sequence>
+                                                                </ActivityAction>
+                                                              </ui:WindowScope.Body>
+                                                            </ui:WindowScope>
+                                                            <ui:ExcelAppendRange DataTable="[dtPResultData]" DisplayName="Append Range" sap:VirtualizedContainerService.HintSize="687,87" sap2010:WorkflowViewState.IdRef="ExcelAppendRange_1" SheetName="PResult">
+                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                </scg:Dictionary>
+                                                              </sap:WorkflowViewStateService.ViewState>
+                                                            </ui:ExcelAppendRange>
+                                                          </Sequence>
+                                                        </ActivityAction>
+                                                      </ui:WindowScope.Body>
+                                                    </ui:WindowScope>
+                                                  </Sequence>
+                                                </Sequence>
+                                              </If.Then>
+                                              <If.Else>
+                                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Not Processing ScamsNo: &quot;+strScamsNo+&quot; -Completed Flag is Enabled&quot;]" />
+                                              </If.Else>
+                                            </If>
+                                          </Sequence>
+                                        </Sequence>
+                                      </ActivityAction>
+                                    </ui:ForEach.Body>
+                                  </ui:ForEach>
+                                  <ui:ExcelSaveWorkbook DisplayName="Save Workbook" sap:VirtualizedContainerService.HintSize="1346,22" sap2010:WorkflowViewState.IdRef="ExcelSaveWorkbook_1" />
+                                </Sequence>
+                              </If.Then>
+                              <If.Else>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;No ScamsNo in CuttingList for Shift: &quot;+strShift]" />
+                              </If.Else>
+                            </If>
+                          </Sequence>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEach.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:ForEach>
+                  <ui:Click AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click Close" sap:VirtualizedContainerService.HintSize="1901,106" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT" SimulateClick="True">
+                    <ui:Click.CursorPosition>
+                      <ui:CursorPosition Position="Center">
+                        <ui:CursorPosition.OffsetX>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetX>
+                        <ui:CursorPosition.OffsetY>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:CursorPosition.OffsetY>
+                      </ui:CursorPosition>
+                    </ui:Click.CursorPosition>
+                    <ui:Click.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="f269c307-43f3-4cd0-a3f0-7afa9860e49b" InformativeScreenshot="ef465fdfb9f596332a20470508d34892" Selector="&lt;wnd app='scamsf.exe' ctrlname='Z_PL_ProdResultC_S' /&gt;&lt;ctrl idx='1' name='Close' role='push button' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:Click.Target>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:Click>
+                  <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" DisplayName="Send Hotkey" sap:VirtualizedContainerService.HintSize="1901,116" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="f3" KeyModifiers="None" SpecialKey="True">
+                    <ui:SendHotkey.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="88c402be-560d-4bea-97cc-23ffe2106c91">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:SendHotkey.Target>
+                  </ui:SendHotkey>
+                  <Sequence DisplayName="Post Condition" sap:VirtualizedContainerService.HintSize="1901,581" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="484,51" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+                      <ui:CommentOut.Body>
+                        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,179" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtPResultData]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="PResult" WorkbookPath="[StrInputFilePath]" />
+                        </Sequence>
+                      </ui:CommentOut.Body>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </ui:CommentOut>
+                    <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="484,151" sap2010:WorkflowViewState.IdRef="Sequence_17">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:ExcelReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtPResultData]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_1" SheetName="PResult" />
+                    </Sequence>
+                    <If Condition="[dtPResultData.Rows.Count&gt;0]" DisplayName="If DtPResult has data?" sap:VirtualizedContainerService.HintSize="484,207" sap2010:WorkflowViewState.IdRef="If_5">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Else>
+                        <Throw Exception="[New Exception(&quot;PResult Data extracted from SCAMS is Empty&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </Sequence>
+              </ActivityAction>
+            </ui:ExcelApplicationScope.Body>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </ui:ExcelApplicationScope>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="2023,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="System Exception" sap:VirtualizedContainerService.HintSize="376,245" sap2010:WorkflowViewState.IdRef="Sequence_44">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Error" Message="[&quot;PResult Slitting Data Extraction Failed, Exception Details : &quot;+exception.Message]" />
+              <Throw DisplayName="Throw-SysEx" Exception="[New Exception(&quot;PResult Slitting Data Extraction Failed, Exception Details : &quot;+exception.Message)]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_3" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>

@@ -1,0 +1,31 @@
+<html>
+<style>
+p.small{
+line-height:25px;
+}
+</style>
+	<body>
+		<p>
+			Dear Team,
+			<br><br>
+			Please find the below <b>@SubProcessName</b> Processed Details. 			
+			<br><br>
+		</p>
+		<p class="small">
+			Process Name &nbsp;&nbsp;&nbsp;: <b>@ProcessName</b>
+			<br>
+			Sub Process &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>@SubProcessName</b>
+			<br>
+			Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <b>@Status</b>
+			<br>
+			@ProcessDate
+			<br>
+			@FilePath
+			<br>
+			@ExceptionMessage
+			
+			
+		</p>
+<p>This is an automated email, please do not reply to this email</p>
+	</body>
+</html>
